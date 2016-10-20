@@ -1,2 +1,8 @@
 sudo yum install -y patch
 sudo yum install -y sqlite-devel
+sudo sed -i '1s/^/auth       sufficient   pam_wheel.so trust group=chsh/' /etc/pam.d/chsh
+git clone https://github.com/gautamg795/dotfiles.git /home/ec2-user/dotfiles
+pushd /home/ec2-user/dotfiles
+git checkout amazon
+./install
+popd
