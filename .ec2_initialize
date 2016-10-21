@@ -1,6 +1,6 @@
 sudo yum install -y patch sqlite-devel zsh
 sudo sh -c 'echo "auth       sufficient   pam_wheel.so trust group=chsh/" >> /etc/pam.d/chsh'
-sudo addgroup chsh
+sudo groupadd chsh
 sudo usermod -a -G chsh ec2-user
 git clone https://github.com/gautamg795/dotfiles.git /home/ec2-user/dotfiles
 pushd /home/ec2-user/dotfiles
