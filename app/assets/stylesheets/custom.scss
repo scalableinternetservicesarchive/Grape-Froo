@@ -27,3 +27,13 @@
 #sidenav + div .col-md-12:first-of-type > * {
   margin-top: 0;
 }
+.card {
+  width: inherit;
+  max-width: 50%;
+  @media (min-width: 768px) {
+    max-width: 33.33333333%;
+  }
+  @media (min-width: 992px) {
+    max-width: 25%;
+  }
+}
