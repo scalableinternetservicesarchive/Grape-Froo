@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161021055121) do
+ActiveRecord::Schema.define(version: 20161021092929) do
 
   create_table "templates", force: :cascade do |t|
     t.string   "name"
     t.text     "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_templates_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
