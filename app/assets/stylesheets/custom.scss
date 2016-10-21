@@ -1,2 +1,17 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+#searchbar {
+  min-width: 500px;
+}
+#nav-collapse {
+  padding-top: 10px;
+}
+.navbar-toggle {
+  margin-top: 16px;
+}
+.navbar-header {
+  min-height: 70px;
+}
+#logo {
+  height: inherit;
+}
