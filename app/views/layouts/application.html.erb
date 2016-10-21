@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-      <title><%= full_title(yield(:title)) %></title>
+    <title><%= full_title(yield(:title)) %></title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,32 +9,32 @@
   </head>
 
   <body>
-      <div class="container">
+    <div class="container">
       <nav class="navbar navbar-default">
-          <div class="container-fluid">
-              <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                      <span class="sr-only">Toggle navigation</span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="#">GenMeme</a>
-              </div>
-              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <form class="navbar-form navbar-left">
-                      <div class="form-group">
-                          <input type="text" class="form-control" placeholder="Search memes">
-                      </div>
-                      <button type="submit" class="btn btn-default">Submit</button>
-                  </form>
-                  <ul class="nav navbar-right navbar-nav">
-                      <li><a href="#">Login</a></li>
-                  </ul>
-              </div>
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">GenMeme</a>
           </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-left">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search memes">
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-right navbar-nav">
+              <li><a href="#">Login</a></li>
+            </ul>
+          </div>
+        </div>
       </nav>
-      </div>
+    </div>
     <%= yield %>
   </body>
 </html>
