@@ -1,7 +1,4 @@
 <% provide(:title, "Templates") %>
-<script type="text/javascript">
-$("#nav-templates").addClass("active");
-</script>
 <% if notice %><p id="notice"><%= notice %></p> <% end %>
 <div class="row">
   <div class="col-md-12">
@@ -20,3 +17,8 @@ $("#nav-templates").addClass("active");
     <% end %>
   </div>
 </div>
+<% content_for :footerjs do %>
+  <script type="text/javascript">
+    $("#nav-templates").addClass("active");
+  </script>
+<% end %>
