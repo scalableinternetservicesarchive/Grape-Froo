@@ -23,3 +23,7 @@
 }
 .thumbnail {
 }
+
+#sidenav + div .col-md-12:first-of-type > * {
+  margin-top: 0;
+}

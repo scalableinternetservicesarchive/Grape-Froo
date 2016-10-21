@@ -2,7 +2,7 @@
 <script type="text/javascript">
 $("#nav-templates").addClass("active");
 </script>
-<p id="notice"><%= notice %></p>
+<% if notice %><p id="notice"><%= notice %></p> <% end %>
 <div class="row">
   <div class="col-md-12">
     <h2>Templates&nbsp;
