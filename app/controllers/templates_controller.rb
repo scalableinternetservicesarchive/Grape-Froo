@@ -4,7 +4,11 @@ class TemplatesController < ApplicationController
   # GET /templates
   # GET /templates.json
   def index
-    @templates = Template.all
+    if params[:query].present?
+      @templates = Template.where("lower(name) LIKE ?", "%#{params[:query].downcase}%").to_a
+    else
+      @templates = Template.all
+    end
   end
 
   # GET /templates/1
@@ -59,16 +63,6 @@ class TemplatesController < ApplicationController
       format.html { redirect_to templates_url, notice: 'Template was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-
-  # POST /temples/search
-  def search
-    if params[:name]
-      puts "TESTING SEARCH"
-      @templates = Template.where("lower(name) LIKE ?", "%#{params[:name].downcase}%").to_a
-    end
-
-    redirect_to templates_url
   end
 
   private
