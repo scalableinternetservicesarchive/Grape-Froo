@@ -4,7 +4,11 @@ class TemplatesController < ApplicationController
   # GET /templates
   # GET /templates.json
   def index
-    @templates = Template.all
+    if params[:query].present?
+      @templates = Template.where("lower(name) LIKE ?", "%#{params[:query].downcase}%")
+    else
+      @templates = Template.all
+    end
   end
 
   # GET /templates/1

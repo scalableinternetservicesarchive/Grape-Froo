@@ -1,25 +1,31 @@
 <% provide(:title, "Templates") %>
 <% if notice %><p id="notice"><%= notice %></p> <% end %>
 <div class="row">
-  <div class="col-md-12">
-    <h2>Templates&nbsp;
+  <div class="col-md-9">
+    <h2 id="subheader">Templates&nbsp;
       <%= link_to 'New Template', new_template_path, :class => "btn btn-default"%>
     </h2>
   </div>
-  <div class="clearfix"></div>
-  <div class="row">
-    <% @templates.each do |template| %>
-      <div class="col-xs-6 col-sm-4 col-md-3 card">
-        <div class="thumbnail">
-          <%= link_to(image_tag(template.url, :class => "template-img"),
-                      template, :title => template.name) %>
-        </div>
-      </div>
-    <% end %>
+  <div class="col-md-3">
+    <%= bootstrap_form_tag url: :templates, method: "get", layout: :inline do |f| %>
+        <%= f.text_field :query, skip_label: true, placeholder: "Search templates" %>
+        <%= f.submit :submit, name: nil%>
+      <% end %>
   </div>
+</div>
+<div class="clearfix"></div>
+<div class="row">
+  <% @templates.each do |template| %>
+    <div class="col-xs-6 col-sm-4 col-md-3 card">
+      <div class="thumbnail">
+        <%= link_to(image_tag(template.url, :class => "template-img"),
+                    template, :title => template.name) %>
+    </div>
+    </div>
+  <% end %>
 </div>
 <% content_for :footerjs do %>
   <script type="text/javascript">
-    $("#nav-templates").addClass("active");
+$("#nav-templates").addClass("active");
   </script>
 <% end %>

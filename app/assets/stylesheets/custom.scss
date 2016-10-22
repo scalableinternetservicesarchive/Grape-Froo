@@ -6,10 +6,10 @@
 #nav-collapse {
   padding-top: 10px;
 }
-.navbar-toggle {
+#top-nav-toggle {
   margin-top: 16px;
 }
-.navbar-header {
+#top-nav-header {
   min-height: 70px;
 }
 #logo {
@@ -24,7 +24,7 @@
 .thumbnail {
 }
 
-#sidenav + div .col-md-12:first-of-type > * {
+#subheader {
   margin-top: 0;
 }
 .card {
@@ -36,4 +36,7 @@
   @media (min-width: 992px) {
     max-width: 25%;
   }
+}
+div.col-md-3 > form {
+  float: right; // Makes the search look nice everywhere but mobile...
 }
