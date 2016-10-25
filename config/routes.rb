@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :templates
   get 'static_pages/home'
   root 'static_pages#home'
