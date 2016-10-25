@@ -18,6 +18,18 @@
   </head>
 
   <body>
+    <% if notice %>
+    <div class="alert alert-success alert-top" role="alert">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <%= notice %>
+    </div>
+    <% end %>
+    <% if alert %>
+    <div class="alert alert-danger alert-top" role="alert">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <%= alert %>
+    </div>
+    <% end %>
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container-fluid">
         <div class="navbar-header" id="top-nav-header">
@@ -40,7 +52,13 @@
             <button type="submit" class="btn btn-default">Submit</button>
           </form>
           <ul class="nav navbar-right navbar-nav">
-            <li><a href="#">Login</a></li>
+            <% if user_signed_in? %>
+              <li>Signed in as <%= current_user.email %></li>
+              <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: "navbar-link" %></li>
+            <% else %>
+              <li><%= link_to "Sign Up", new_user_registration_path, class: "navbar-link" %></li>
+              <li><%= link_to "Login", new_user_session_path, class: "navbar-link" %></li>
+          <% end %>
           </ul>
         </div>
       </div>

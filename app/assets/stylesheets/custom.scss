@@ -1,5 +1,9 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+.alert-top {
+  margin-bottom: 0;
+  border-radius: 0;
+}
 #searchbar {
   min-width: 500px;
 }
