@@ -18,6 +18,18 @@
   </head>
 
   <body>
+    <% if notice %>
+    <div class="alert alert-success alert-top" role="alert">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <%= notice %>
+    </div>
+    <% end %>
+    <% if alert %>
+    <div class="alert alert-danger alert-top" role="alert">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <%= alert %>
+    </div>
+    <% end %>
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container-fluid">
         <div class="navbar-header" id="top-nav-header">
