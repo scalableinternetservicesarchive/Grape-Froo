@@ -5,6 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+User.create(:email => 'test@example.com', :username => 'test', :password =>
+            'password', :password_confirmation => 'password')
 Template.create("name"=>"confession bear", "url"=>"http://i.imgur.com/uGNb9El.jpg")
 Template.create("name"=>"how about no", "url"=>"http://i.imgur.com/VLlma7X.jpg")
 Template.create("name"=>"unpopular opinion", "url"=>"http://i.imgur.com/F1SkTlb.jpg")
