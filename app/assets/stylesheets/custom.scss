@@ -22,15 +22,12 @@
 #create-btn-div {
   padding-bottom: 20px;
 }
-.template-img {
-  height: 150px !important;
-}
-.thumbnail {
-}
 
 #subheader {
   margin-top: 0;
 }
+
+// Image cards
 .card {
   width: inherit;
   max-width: 50%;
@@ -41,6 +38,62 @@
     max-width: 25%;
   }
 }
+
+.template-img {
+  height: 150px !important;
+}
+
+
+// Search bar in main content panel (i.e. for templates)
 div.col-md-3 > form {
   float: right; // Makes the search look nice everywhere but mobile...
+}
+
+// CSS for fixed sidebar on left + main content on right
+.col-fixed {
+  position:relative;
+  min-height:1px;
+  padding-right:15px;
+  padding-left:15px;
+  float:left;
+  width:100%;
+}
+
+.col-fluid {
+  position:relative;
+  min-height:1px;
+  padding-right:15px;
+  padding-left:15px;
+  float:left;
+  width:100%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  $colwidth: 180px;
+  .col-fixed {
+    width: $colwidth;
+  }
+  .col-fluid {
+    width: calc(100% - #{$colwidth});
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  $colwidth: 180px;
+  .col-fixed {
+    width: $colwidth;
+  }
+  .col-fluid {
+    width: calc(100% - #{$colwidth});
+  }
+}
+
+@media (min-width: 1200px) {
+  $colwidth: 250px;
+  .col-fixed {
+    width: $colwidth;
+  }
+  .col-fluid {
+    width: calc(100% - #{$colwidth});
+  }
 }

@@ -65,7 +65,7 @@
     </nav>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-1" id="sidenav">
+        <div class="col-fixed" id="sidenav">
           <div class="btn-group-vertical center-block" id="create-btn-div">
             <a href="#" class="btn btn-success">Create Meme</a>
           </div>
@@ -77,7 +77,7 @@
             <li role="presentation" id="nav-profile"><%= link_to("Your Profile", edit_user_registration_path) %></li>
           </ul>
         </div>
-        <div class="col-md-11">
+        <div class="col-fluid">
           <%= yield %>
         </div>
       </div>
