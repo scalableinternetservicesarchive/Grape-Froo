@@ -19,4 +19,5 @@ class Template < ApplicationRecord
   validates :name, uniqueness: true, presence: true, length: { in: 4..255 }
   validates_with UrlValidator, fields: [:url]
   belongs_to :user
+  has_many :meme
 end

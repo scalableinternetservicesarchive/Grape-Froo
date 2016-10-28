@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @meme.url %>
+</p>
+
+<p>
+  <strong>Top caption:</strong>
+  <%= @meme.top_caption %>
+</p>
+
+<p>
+  <strong>Middle caption:</strong>
+  <%= @meme.middle_caption %>
+</p>
+
+<p>
+  <strong>Bottom caption:</strong>
+  <%= @meme.bottom_caption %>
+</p>
+
+<p>
+  <strong>Template:</strong>
+  <%= @meme.template %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @meme.user %>
+</p>
+
+<%= link_to 'Edit', edit_meme_path(@meme) %> |
+<%= link_to 'Back', memes_path %>
