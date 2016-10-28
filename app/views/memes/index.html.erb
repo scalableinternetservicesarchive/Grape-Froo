@@ -35,3 +35,8 @@
 <br>
 
 <%= link_to 'New Meme', new_meme_path %>
+<% content_for :footerjs do %>
+  <script type="text/javascript">
+    $("#nav-recent").addClass("active");
+  </script>
+<% end %>
