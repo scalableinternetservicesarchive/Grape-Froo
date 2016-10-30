@@ -7,6 +7,10 @@ class TemplatesController < ApplicationController
   def index
     if params[:query].present?
       @templates = Template.where("lower(name) LIKE ?", "%#{params[:query].downcase}%")
+      respond_to do |format|
+        format.html { }
+        format.js { @templates = @templates.limit(10) }
+      end
     else
       @templates = Template.all
     end
@@ -67,12 +71,6 @@ class TemplatesController < ApplicationController
       format.html { redirect_to templates_url, notice: 'Template was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-
-  # GET /templates/typeahead/:query
-  def typeahead
-    @search = Template.where("lower(name) LIKE ?", "%#{params[:query].downcase}%")
-    render json: @search
   end
 
   private

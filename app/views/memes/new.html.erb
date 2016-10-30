@@ -6,9 +6,9 @@
   <div class="text-center col-md-12">
     <%= bootstrap_form_tag url: :memes, method: "post", layout: :inline do %>
         Select Template:<br>
-          <input id="typeahead" class="typeahead" type="text" placeholder="Search Templates">
+          <input id="template-search" type="text" placeholder="Search Templates">
         <br>
-        <br>
+        <div class="row" id="results"></div>
         <div class="row">
 	        <div class="col-md-6">
 	        <%= text_field(:meme, :top_caption, :id => "top-line", :placeholder => "Top Text")%>
@@ -26,10 +26,8 @@
 <div class="clearfix"></div>
 
 <% content_for :footerjs do %>
-	<%= javascript_include_tag "meme_gen.js" %>
-
 	<!-- for meme_gen.js -->
- 	<script>
+ 	<script type="text/javascript">
 	  	Meme('http://i.imgur.com/uGNb9El.jpg', 'meme');
 
 		$('#top-line, #bottom-line').keyup(function() {
@@ -37,32 +35,21 @@
 		});
  	</script>
 
-	<!-- for typeahead -->
 	<script type="text/javascript">
-		var templates = new Bloodhound({
-			datumTokenizer: Bloodhound.tokenizers.whitespace,
-			queryTokenizer: Bloodhound.tokenizers.whitespace,
-			remote: {
-				url: '/templates/typeahead/',
-				prepare: function(query, settings) {
-					settings.url += encodeURIComponent($('#typeahead').val());
-					return settings;
-				}
-			},
-			limit: 10
-		});
-		templates.initialize();
-
-		$('#typeahead').typeahead({
-			hint: true,
-			highlight: true,
-			minLength: 1
-		},
-		{
-			name: 'templates',
-			display: 'name',
-			source: templates.ttAdapter()
-		});
+    $("#template-search").keyup(_.debounce(function() {
+      if ($(this).val().trim()) {
+        $.ajax({
+          url: '/templates',
+          context: document.body,
+          data: {
+            query: $(this).val(),
+          },
+          dataType: "script",
+        });
+      } else {
+        $("#results").html("");
+      }
+    }, 500));
 	</script>
 <% end %>
 
