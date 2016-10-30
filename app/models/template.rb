@@ -20,4 +20,5 @@ class Template < ApplicationRecord
   validates_with UrlValidator, fields: [:url]
   belongs_to :user
   has_many :meme
+  self.per_page = 50
 end

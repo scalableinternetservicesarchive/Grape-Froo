@@ -23,6 +23,13 @@
     </div>
   <% end %>
 </div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="text-center">
+      <%= will_paginate @templates, renderer: BootstrapPagination::Rails %>
+    </div>
+  </div>
+</div>
 <% content_for :footerjs do %>
   <script type="text/javascript">
 $("#nav-templates").addClass("active");

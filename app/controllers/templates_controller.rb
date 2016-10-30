@@ -6,9 +6,11 @@ class TemplatesController < ApplicationController
   # GET /templates.json
   def index
     if params[:query].present?
-      @templates = Template.where("lower(name) LIKE ?", "%#{params[:query].downcase}%")
+      @templates = Template
+        .where("lower(name) LIKE ?", "%#{params[:query].downcase}%")
+        .paginate(:page => params[:page])
     else
-      @templates = Template.all
+      @templates = Template.order(created_at: :desc).paginate(:page => params[:page])
     end
   end
 

@@ -5,7 +5,7 @@ class MemesController < ApplicationController
   # GET /memes
   # GET /memes.json
   def index
-    @memes = Meme.all
+    @memes = Meme.order(created_at: :desc).limit(500).paginate(:page => params[:page])
   end
 
   # GET /memes/1
