@@ -9,16 +9,17 @@
         <%= text_field :template, skip_label: true%>
         <br>
         <br>
-        <canvas id="meme"></canvas>
-        <div>
-        <!-- TODO: put front end template stuff here -->
-        </div>
-        Top Text:<br>
-        <%= text_field(:meme, :top_caption, :id => "top-line")%>
+        <div class="row">
+	        <div class="col-md-6">
+	        <%= text_field(:meme, :top_caption, :id => "top-line", :placeholder => "Top Text")%>
+	        </div>
+	        <div class="col-md-6">
+	        <%= text_field(:meme, :bottom_caption, :id => "bottom-line", :placeholder => "Bottom Text") %>
+	        </div>
+	    </div>
+	    <br>
         <br>
-        <br>
-        Bottom Text:<br>
-        <%= text_field(:meme, :bottom_caption, :id => "bottom-line") %>
+        <canvas id="meme" class="meme-img"></canvas>
      <% end %>
   </div>
 </div>
