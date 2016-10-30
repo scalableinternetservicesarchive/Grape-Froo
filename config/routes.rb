@@ -7,6 +7,5 @@ Rails.application.routes.draw do
   get "users/:id/templates" => 'users#templates', :as => :user_templates
   root 'memes#index'
   post 'memes/:id/vote' => 'memes#vote', :as => 'upvote_meme'
-  #post 'downvote' => 'memes#downvote'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
