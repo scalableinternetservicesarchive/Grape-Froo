@@ -1,5 +1,35 @@
-<h1>New Meme</h1>
+<% provide(:title, "New Meme") %>
+<div class="row">
+  <div class="col-md-12">
+    <h2 id="subheader">New Meme</h2>
+  </div>
+  <div class="text-center col-md-12">
+    <%= bootstrap_form_tag url: :memes, method: "post", layout: :inline do %>
+        Select Template:<br>
+        <%= text_field :template, skip_label: true%>
+        <br>
+        <br>
+        <div>
+        <!-- TODO: put front end template stuff here -->
+        </div>
+        Top Text:<br>
+        <%= text_field(:meme, :top_caption)%>
+        <br>
+        <br>
+        Middle Text:<br>
+        <%= text_field(:meme, :middle_caption) %>
+        <br>
+        <br>
+        Bottom Text:<br>
+        <%= text_field(:meme, :bottom_caption) %>
+     <% end %>
+  </div>
+</div>
+<div class="clearfix"></div>
+<% content_for :footerjs do %>
+  <script type="text/javascript">
+$("#nav-templates").addClass("active");
+  </script>
+<% end %>
 
-<%= render 'form', meme: @meme %>
 
-<%= link_to 'Back', memes_path %>
