@@ -1,0 +1,26 @@
+<% provide(:title, "My Templates") %>
+
+<div class="row">
+	<ul class="nav nav-tabs">
+	  <li role="presentation">
+	  	<%= link_to "My Profile", user_path %>
+	  </li>
+	  <li role="presentation">
+	  	<%= link_to "My memes", user_memes_path %>
+	  </li>
+	  <li role="presentation" class="active">
+	  	<%= link_to "My Templates", user_templates_path %>
+	  </li>
+	</ul>
+</div>
+
+<div class="row">
+	<% @user.template.each do |template| %>
+		<div class="col-xs-6 col-sm-4 col-md-3 card">
+			<div class="thumbnail">
+				<%= link_to(image_tag(template.url, :class => "template-img"),
+						   template, :title => template.name) %>
+			</div>
+		</div>
+	<% end %>
+</div>
