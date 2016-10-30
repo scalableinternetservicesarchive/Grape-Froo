@@ -69,6 +69,12 @@ class TemplatesController < ApplicationController
     end
   end
 
+  # GET /templates/typeahead/:query
+  def typeahead
+    @search = Template.where("lower(name) LIKE ?", "%#{params[:query].downcase}%")
+    render json: @search
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_template

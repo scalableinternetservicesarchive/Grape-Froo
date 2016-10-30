@@ -6,7 +6,7 @@
   <div class="text-center col-md-12">
     <%= bootstrap_form_tag url: :memes, method: "post", layout: :inline do %>
         Select Template:<br>
-        <%= text_field :template, skip_label: true%>
+          <input id="typeahead" class="typeahead" type="text" placeholder="Search Templates">
         <br>
         <br>
         <div class="row">
@@ -19,7 +19,7 @@
 	    </div>
 	    <br>
         <br>
-        <canvas id="meme" class="meme"></canvas>
+        <canvas id="meme"></canvas>
      <% end %>
   </div>
 </div>
@@ -27,6 +27,8 @@
 
 <% content_for :footerjs do %>
 	<%= javascript_include_tag "meme_gen.js" %>
+
+	<!-- for meme_gen.js -->
  	<script>
 	  	Meme('http://i.imgur.com/uGNb9El.jpg', 'meme');
 
@@ -34,6 +36,34 @@
 			Meme('http://i.imgur.com/uGNb9El.jpg', 'meme', $('#top-line').val(), $('#bottom-line').val());
 		});
  	</script>
+
+	<!-- for typeahead -->
+	<script type="text/javascript">
+		var templates = new Bloodhound({
+			datumTokenizer: Bloodhound.tokenizers.whitespace,
+			queryTokenizer: Bloodhound.tokenizers.whitespace,
+			remote: {
+				url: '/templates/typeahead/',
+				prepare: function(query, settings) {
+					settings.url += encodeURIComponent($('#typeahead').val());
+					return settings;
+				}
+			},
+			limit: 10
+		});
+		templates.initialize();
+
+		$('#typeahead').typeahead({
+			hint: true,
+			highlight: true,
+			minLength: 1
+		},
+		{
+			name: 'templates',
+			display: 'name',
+			source: templates.ttAdapter()
+		});
+	</script>
 <% end %>
 
 
