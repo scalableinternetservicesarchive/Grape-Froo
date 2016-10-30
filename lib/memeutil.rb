@@ -1,8 +1,8 @@
 module Memeutil
   class << self
     def memeify(template_img, top, bottom)
-      top = (top || '').upcase
-      bottom = (bottom || '').upcase
+      top = (top || '')
+      bottom = (bottom || '')
 
       canvas = Magick::ImageList.new(template_img)
       image = canvas.first
@@ -11,7 +11,7 @@ module Memeutil
       draw.font = File.join(Rails.root, "lib/Impact.ttf")
       draw.font_weight = Magick::BoldWeight
 
-      pointsize = image.columns / 15.0
+      pointsize = image.columns / 5.0
       stroke_width = pointsize / 30.0
 
       # Draw top
