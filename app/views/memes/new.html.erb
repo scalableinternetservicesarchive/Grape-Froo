@@ -9,27 +9,30 @@
         <%= text_field :template, skip_label: true%>
         <br>
         <br>
+        <canvas id="meme"></canvas>
         <div>
         <!-- TODO: put front end template stuff here -->
         </div>
         Top Text:<br>
-        <%= text_field(:meme, :top_caption)%>
-        <br>
-        <br>
-        Middle Text:<br>
-        <%= text_field(:meme, :middle_caption) %>
+        <%= text_field(:meme, :top_caption, :id => "top-line")%>
         <br>
         <br>
         Bottom Text:<br>
-        <%= text_field(:meme, :bottom_caption) %>
+        <%= text_field(:meme, :bottom_caption, :id => "bottom-line") %>
      <% end %>
   </div>
 </div>
 <div class="clearfix"></div>
+
 <% content_for :footerjs do %>
-  <script type="text/javascript">
-$("#nav-templates").addClass("active");
-  </script>
+	<%= javascript_include_tag "meme_gen.js" %>
+ 	<script>
+	  	Meme('http://i.imgur.com/uGNb9El.jpg', 'meme');
+
+		$('#top-line, #bottom-line').keyup(function() {
+			Meme('http://i.imgur.com/uGNb9El.jpg', 'meme', $('#top-line').val(), $('#bottom-line').val());
+		});
+ 	</script>
 <% end %>
 
 
