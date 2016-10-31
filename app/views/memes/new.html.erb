@@ -26,7 +26,13 @@
     <% end %>
 	  <br>
     <br>
-    <canvas id="meme"></canvas>
+    <div class="xmeme" id="meme">
+      <figure>
+        <figcaption id="topcaption"></figcaption>
+        <img id="memeimg">
+        <figcaption id="botcaption"></figcaption>
+      </figure>
+    </div>
   </div>
 </div>
 <div class="clearfix"></div>
@@ -34,13 +40,13 @@
 <% content_for :footerjs do %>
 	<!-- for meme_gen.js -->
  	<script type="text/javascript">
-    var template_url = '';
     var template_id;
-    var update_meme = function() {
-      Meme(template_url, 'meme', $('#top-line').val(), $('#bottom-line').val());
-    }
-		$('#top-line, #bottom-line').keyup(update_meme);
-
+    $('#top-line').on('keyup', function() {
+      $('#topcaption').text($(this).val());
+    })
+    $('#bottom-line').on('keyup', function() {
+      $('#botcaption').text($(this).val());
+    })
     $("#new_meme").submit( function(eventObj) {
       $('<input />').attr('type', 'hidden')
           .attr('name', "meme[template_id]")
@@ -61,9 +67,8 @@
           dataType: "script",
           success: function() {
                       $('.template-img').click(function(event) {
-                        template_url = $(this).attr('src');
+                        $('#memeimg').attr('src', $(this).attr('src'));
                         template_id = $(this).data("template-id");
-                        update_meme();
                       });
                     },
         });
