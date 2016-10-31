@@ -39,7 +39,7 @@
 		$('#top-line, #bottom-line').keyup(update_meme);
 
     $("#meme_gen").submit( function(eventObj) {
-      $('<input />')
+      $('<input />').attr('type', 'hidden')
           .attr('name', "meme[template_id]")
           .attr('value', template_id)
           .appendTo('#meme_gen');
