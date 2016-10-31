@@ -76,11 +76,11 @@ class MemesController < ApplicationController
 
       if @vote_value == false
         Vote.create(meme_id: params[:id], user: current_user, value: true)
-        @return = -1
+        @return = 1
       end
     else
       Vote.create(meme_id: params[:id], user: current_user, value: true)
-      @return = -1
+      @return = 1
     end
 
     # Return value
@@ -102,11 +102,11 @@ class MemesController < ApplicationController
 
       if @vote_value == true
         Vote.create(meme_id: params[:id], user: current_user, value: false)
-        @return = 1
+        @return = -1
       end
     else
       Vote.create(meme_id: params[:id], user: current_user, value: false)
-      @return = 1
+      @return = -1
     end
 
     # Return value

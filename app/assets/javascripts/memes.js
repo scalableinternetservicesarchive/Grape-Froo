@@ -9,7 +9,7 @@ var vote_ready = function() {
 		// if val = 0, clear both colors
 		// if val = 1, set downvote color, clear upvote color,
 
-		if (val == -1) {
+		if (val == 1) {
 			up_arrow.css("color", "#41be47");
 			down_arrow.css("color", "");
 		}
@@ -17,7 +17,7 @@ var vote_ready = function() {
 			up_arrow.css("color", "");
 			down_arrow.css("color", "");
 		}
-		else { // val == 1
+		else { // val == -1
 			up_arrow.css("color", "");
 			down_arrow.css("color", "red");
 		}
