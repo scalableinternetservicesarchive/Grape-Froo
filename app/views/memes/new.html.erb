@@ -4,18 +4,21 @@
     <h2 id="subheader">New Meme</h2>
   </div>
   <div class="text-center col-md-12">
-    <%= bootstrap_form_tag url: :memes, method: "post", layout: :inline do %>
-        Select Template:<br>
-          <input id="template-search" type="text" placeholder="Search Templates">
-        <br>
-        <div class="row" id="results"></div>
-        <div class="row">
+    Select Template:<br>
+    <input id="template-search" type="text" placeholder="Search Templates">
+    <br>
+    <div class="row" id="results"></div>
+    <br>
+    <br>
+    <div class="row">
+    <%= bootstrap_form_tag url: new_meme_path, method: "get", layout: :inline do %>
 	        <div class="col-md-6">
 	        <%= text_field(:meme, :top_caption, :id => "top-line", :placeholder => "Top Text")%>
 	        </div>
 	        <div class="col-md-6">
 	        <%= text_field(:meme, :bottom_caption, :id => "bottom-line", :placeholder => "Bottom Text") %>
 	        </div>
+          <%= submit_tag :submit, name: nil%>
 	    </div>
 	    <br>
         <br>
