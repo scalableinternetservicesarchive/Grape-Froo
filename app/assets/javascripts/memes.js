@@ -4,6 +4,25 @@
 
 var vote_ready = function() {
 
+	var color_arrows = function(val, up_arrow, down_arrow) {
+		// If val = -1, set upvote color, clear downvote color
+		// if val = 0, clear both colors
+		// if val = 1, set downvote color, clear upvote color,
+
+		if (val == -1) {
+			up_arrow.css("color", "#41be47");
+			down_arrow.css("color", "");
+		}
+		else if (val == 0) {
+			up_arrow.css("color", "");
+			down_arrow.css("color", "");
+		}
+		else { // val == 1
+			up_arrow.css("color", "");
+			down_arrow.css("color", "red");
+		}
+	};
+
 	$('.up-vote-button').on("click", function () {
 
 		console.log(1);
@@ -20,19 +39,7 @@ var vote_ready = function() {
 			}, //upvote
 
 			success: function upVote(result) {
-				if (result.created_upvote === true) { // upvote created
-					up_arrow.css("color", "#41be47");
-				}
-				else {// upvote deleted
-					up_arrow.css("color", "");
-				}
-
-				if (result.deleted_downvote === true) { // downvote deleted
-					down_arrow.css("color", "");
-				}
-				else{
-
-				} // downvote didnt exist
+				color_arrows(result, up_arrow, down_arrow);
 			}
 		})
 	});
@@ -51,19 +58,7 @@ var vote_ready = function() {
 			}, //upvote
 
 			success: function upVote(result) {
-				if (result.created_downvote === true) { // downvote created
-					down_arrow.css("color", "red");
-				}
-				else {// downvote deleted
-					down_arrow.css("color", "");
-				}
-
-				if (result.deleted_downvote === true) { // upvote deleted
-					up_arrow.css("color", "");
-				}
-				else{
-
-				} // upvote didnt exist
+				color_arrows(result, up_arrow, down_arrow);
 			}
 		})
 	});
