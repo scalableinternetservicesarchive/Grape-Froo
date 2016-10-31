@@ -10,20 +10,23 @@
     <div class="row" id="results"></div>
     <br>
     <br>
+    <%= bootstrap_form_for(@meme) do |f| %>
     <div class="row">
-    <%= bootstrap_form_tag url: new_meme_path, method: "get", :html => {:id => 'meme_gen'} , layout: :inline do %>
-	        <div class="col-md-6">
-	        <%= text_field(:meme, :top_caption, :id => "top-line", :placeholder => "Top Text")%>
-	        </div>
-	        <div class="col-md-6">
-	        <%= text_field(:meme, :bottom_caption, :id => "bottom-line", :placeholder => "Bottom Text") %>
-	        </div>
-          <%= submit_tag :submit, name: nil, value: nil%>
-	    </div>
-	    <br>
-        <br>
-        <canvas id="meme"></canvas>
-     <% end %>
+      <div class="col-md-2"></div>
+      <div class="col-md-3">
+	    <%= f.text_field :top_caption, :id => "top-line", :placeholder => "Top Text" %>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-md-3">
+	    <%= f.text_field :bottom_caption, :id => "bottom-line", :placeholder => "Bottom Text" %>
+      </div>
+      <div class="col-md-2"></div>
+	  </div>
+    <%= f.primary %>
+    <% end %>
+	  <br>
+    <br>
+    <canvas id="meme"></canvas>
   </div>
 </div>
 <div class="clearfix"></div>
@@ -38,11 +41,11 @@
     }
 		$('#top-line, #bottom-line').keyup(update_meme);
 
-    $("#meme_gen").submit( function(eventObj) {
+    $("#new_meme").submit( function(eventObj) {
       $('<input />').attr('type', 'hidden')
           .attr('name', "meme[template_id]")
           .attr('value', template_id)
-          .appendTo('#meme_gen');
+          .appendTo('#new_meme');
     });
  	</script>
 
