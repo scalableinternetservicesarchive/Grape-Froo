@@ -53,4 +53,4 @@ gem 'bootstrap-sass', '3.3.6'
 gem 'bootstrap_form', '2.5.2'
 gem 'devise'
 gem 'pundit'
-gem 'wdm', '>= 0.1.0'
+gem 'wdm', '>= 0.1.0', platform: [:mingw, :mswin, :x64_mingw]
