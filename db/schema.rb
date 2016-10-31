@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20161031080135) do
   create_table "memes", force: :cascade do |t|
     t.string   "url"
     t.string   "top_caption"
-    t.string   "middle_caption"
     t.string   "bottom_caption"
     t.integer  "template_id"
     t.integer  "user_id"
