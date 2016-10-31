@@ -34,9 +34,6 @@ var vote_ready = function() {
 		$.ajax({
 			type : "POST",
 			url : vote_url,
-			data : {
-				val: true
-			}, //upvote
 
 			success: function upVote(result) {
 				color_arrows(result, up_arrow, down_arrow);
@@ -53,9 +50,6 @@ var vote_ready = function() {
 		$.ajax({
 			type : "POST",
 			url : vote_url,
-			data : {
-				val: false
-			}, //upvote
 
 			success: function upVote(result) {
 				color_arrows(result, up_arrow, down_arrow);
