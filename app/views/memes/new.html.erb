@@ -11,14 +11,14 @@
     <br>
     <br>
     <div class="row">
-    <%= bootstrap_form_tag url: new_meme_path, method: "get", layout: :inline do %>
+    <%= bootstrap_form_tag url: new_meme_path, method: "get", :html => {:id => 'meme_gen'} , layout: :inline do %>
 	        <div class="col-md-6">
 	        <%= text_field(:meme, :top_caption, :id => "top-line", :placeholder => "Top Text")%>
 	        </div>
 	        <div class="col-md-6">
 	        <%= text_field(:meme, :bottom_caption, :id => "bottom-line", :placeholder => "Bottom Text") %>
 	        </div>
-          <%= submit_tag :submit, name: nil%>
+          <%= submit_tag :submit, name: nil, value: nil%>
 	    </div>
 	    <br>
         <br>
@@ -32,10 +32,18 @@
 	<!-- for meme_gen.js -->
  	<script type="text/javascript">
     var template_url = '';
+    var template_id;
     var update_meme = function() {
       Meme(template_url, 'meme', $('#top-line').val(), $('#bottom-line').val());
     }
 		$('#top-line, #bottom-line').keyup(update_meme);
+
+    $("#meme_gen").submit( function(eventObj) {
+      $('<input />')
+          .attr('name', "meme[template_id]")
+          .attr('value', template_id)
+          .appendTo('#meme_gen');
+    });
  	</script>
 
 	<script type="text/javascript">
@@ -51,6 +59,7 @@
           success: function() {
                       $('.template-img').click(function(event) {
                         template_url = $(this).attr('src');
+                        template_id = $(this).data("template-id");
                         update_meme();
                       });
                     },
@@ -60,9 +69,6 @@
       }
     }, 500));
 	</script>
-
-  <script type="text/javascript">
-  </script>
 <% end %>
 
 
