@@ -28,11 +28,11 @@
 <% content_for :footerjs do %>
 	<!-- for meme_gen.js -->
  	<script type="text/javascript">
-	  	Meme('http://i.imgur.com/uGNb9El.jpg', 'meme');
-
-		$('#top-line, #bottom-line').keyup(function() {
-			Meme('http://i.imgur.com/uGNb9El.jpg', 'meme', $('#top-line').val(), $('#bottom-line').val());
-		});
+    var template_url = '';
+    var update_meme = function() {
+      Meme(template_url, 'meme', $('#top-line').val(), $('#bottom-line').val());
+    }
+		$('#top-line, #bottom-line').keyup(update_meme);
  	</script>
 
 	<script type="text/javascript">
@@ -45,12 +45,21 @@
             query: $(this).val(),
           },
           dataType: "script",
+          success: function() {
+                      $('.template-img').click(function(event) {
+                        template_url = $(this).attr('src');
+                        update_meme();
+                      });
+                    },
         });
       } else {
         $("#results").html("");
       }
     }, 500));
 	</script>
+
+  <script type="text/javascript">
+  </script>
 <% end %>
 
 
