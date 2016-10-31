@@ -53,15 +53,4 @@ ActiveRecord::Schema.define(version: 20161031053024) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  create_table "votes", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "meme_id"
-    t.boolean  "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["meme_id"], name: "index_votes_on_meme_id"
-    t.index ["user_id", "meme_id"], name: "index_votes_on_user_id_and_meme_id", unique: true
-    t.index ["user_id"], name: "index_votes_on_user_id"
-  end
-
 end
