@@ -1,5 +1,5 @@
 class MemesController < ApplicationController
-  before_action :set_meme, only: [:show, :edit, :update, :destroy]
+  before_action :set_meme, only: [:show, :edit, :update, :destroy, :vote]
   before_action :authenticate_user!, except: [:index, :show]
 
   # GET /memes
@@ -66,7 +66,73 @@ class MemesController < ApplicationController
   end
 
   def upvote
-    
+    @vote = Vote.where(meme_id: params[:id], user: current_user)
+
+    if @vote.count != 0
+      @vote_value = @vote[0].value
+      @vote.destroy_all
+
+      @created_upvote = false;
+      @deleted_downvote = false;
+
+      if @vote_value == false
+        Vote.create(meme_id: params[:id], user: current_user, value: true)
+        @created_upvote = true;
+        @deleted_downvote = true;
+      end
+    else
+      Vote.create(meme_id: params[:id], user: current_user, value: true)
+      @created_upvote = true;
+      @deleted_downvote = false;
+    end
+
+    # Return value
+    #   created_upvote: true if upvote was created, false if deleted
+    #   deleted_downvotedownvote: true if downvote was deleted, false if there was no downvote
+    #
+    respond_to do |format|
+        format.json { render :json => 
+                          { 
+                            :created_upvote => @created_upvote,
+                            :deleted_downvote => @deleted_downvote
+                          } 
+                    }
+    end
+  end
+
+  def downvote
+    @vote = Vote.where(meme_id: params[:id], user: current_user)
+
+    if @vote.count != 0
+      @vote_value = @vote[0].value
+      @vote.destroy_all
+
+      @created_downvote = false;
+      @deleted_upvote = false;
+
+      if @vote_value == true
+        Vote.create(meme_id: params[:id], user: current_user, value: false)
+        @created_downvote = true;
+        @deleted_upvote = true;
+      end
+    else
+      Vote.create(meme_id: params[:id], user: current_user, value: false)
+      @created_downvote = true;
+      @deleted_upvote = false;
+    end
+
+    # Return value
+    #   created_downvote: true if downvote was created, false if deleted
+    #   deleted_upvote: true if upvote was deleted, false if there was not upvote
+    #
+    respond_to do |format|
+        format.json { render :json => 
+                          { 
+                            :created_downvote => @created_downvote,
+                            :deleted_downvote => @deleted_upvote
+                          } 
+                    }
+    end
   end
 
   private

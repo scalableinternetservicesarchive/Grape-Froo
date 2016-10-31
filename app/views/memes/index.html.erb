@@ -33,27 +33,26 @@
 </table>
 
 <div class="row">
+
   <% @memes.each do |meme| %>
-    <div class="row">
-      <div class="col-xs-6 col-sm-4 col-md-3 card">
-        <div class="thumbnail">
-          <%= link_to(image_tag(meme.url, :class => "meme-img", :data => { :memeid => meme.id }),
-                 meme, :title => meme.top_caption) %>
-        </div>
+    <div class="col-xs-6 col-sm-4 col-md-3 card">
+      <div class="thumbnail">
+        <%= link_to(image_tag(meme.url, :class => "meme-img", :data => { :memeid => meme.id }),
+               meme, :title => meme.top_caption) %>
       </div>
+
+      <%= button_tag(type: 'button', class: ["btn", "btn-default", "up-vote-button"], data: { memeid: meme.id }) do
+          content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-up"]) 
+          end
+      %>
+
+      <%= button_tag(type: 'button', class: ["btn", "btn-default", "down-vote-button"], data: { memeid: meme.id }) do
+          content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-down"]) 
+          end
+      %>
     </div>
-
-    <div class="row">
-      <div class="col">
-        <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
-
-      </div>
-
-      <button type="button" class="btn btn-default" aria-label="Left Align">
-        <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
-      </button>
-    </div> 
   <% end %>
+
 </div>
 
 <br>
