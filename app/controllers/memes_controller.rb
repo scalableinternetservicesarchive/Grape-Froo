@@ -125,6 +125,6 @@ class MemesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def meme_params
-      params.require(:meme).permit(:url, :top_caption, :middle_caption, :bottom_caption, :template_id, :user_id)
+      params.require(:meme).permit(:url, :top_caption, :bottom_caption, :template_id, :user_id)
     end
 end

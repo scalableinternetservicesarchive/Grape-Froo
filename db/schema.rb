@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161030081638) do
+ActiveRecord::Schema.define(version: 20161031053024) do
 
   create_table "memes", force: :cascade do |t|
     t.string   "url"
     t.string   "top_caption"
-    t.string   "middle_caption"
     t.string   "bottom_caption"
     t.integer  "template_id"
     t.integer  "user_id"
