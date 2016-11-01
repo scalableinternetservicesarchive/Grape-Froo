@@ -1,9 +1,14 @@
+require 'tempfile'
+require 'RMagick'
+# Adapted from github.com/cmdrkeene/memegen
 module Memeutil
   class << self
     def memeify(template_img, top, bottom)
       top = (top || '')
       bottom = (bottom || '')
-
+      if template_img.starts_with?('//')
+        template_img = 'http:' + template_img
+      end
       canvas = Magick::ImageList.new(template_img)
       image = canvas.first
 
@@ -42,10 +47,11 @@ module Memeutil
           self.pointsize = pointsize * scale
         end
       end
-
-      output_path = "/tmp/meme-#{Time.now.to_i}.jpeg"
-      canvas.write(output_path)
-      output_path
+      ext = File.extname(URI.parse(template_img).path)
+      file = Tempfile.new([rand(36**10).to_s(36), ext])
+      file.binmode
+      file.write(canvas.to_blob)
+      return file
     end
 
     private

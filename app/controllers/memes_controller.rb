@@ -1,3 +1,4 @@
+require 'Memeutil'
 class MemesController < ApplicationController
   before_action :set_meme, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
@@ -28,6 +29,8 @@ class MemesController < ApplicationController
   def create
     @meme = Meme.new(meme_params)
     @meme.user = current_user
+    output = Memeutil.memeify(@meme.template.image.url, @meme.top_caption, @meme.bottom_caption)
+    @meme.image = output
     respond_to do |format|
       if @meme.save
         format.html { redirect_to @meme, notice: 'Meme was successfully created.' }
