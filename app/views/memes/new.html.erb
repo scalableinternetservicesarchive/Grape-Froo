@@ -74,6 +74,12 @@
           .attr('value', template_id)
           .appendTo('#new_meme');
     });
+    $('[name=commit]').on('click', function() {
+      if (!template_id) return false;
+      $(this).val("Loading...");
+      $(this).prop('disabled', true);
+      $(this).parent('form').submit();
+    });
  	</script>
 
 	<script type="text/javascript">
