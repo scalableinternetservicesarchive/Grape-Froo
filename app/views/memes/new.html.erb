@@ -1,5 +1,105 @@
-<h1>New Meme</h1>
+<% provide(:title, "New Meme") %>
+<div class="row">
+  <div class="col-md-12">
+    <h2 id="subheader">New Meme</h2>
+  </div>
+  <div class="text-center col-md-12">
+    Select Template:<br>
+    <input id="template-search" type="text" placeholder="Search Templates">
+    <br>
+    <div class="row" id="results"></div>
+    <br>
+    <br>
+    <%= bootstrap_form_for(@meme) do |f| %>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-3">
+	    <%= f.text_field :top_caption, :id => "top-line", :placeholder => "Top Text" %>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-md-3">
+	    <%= f.text_field :bottom_caption, :id => "bottom-line", :placeholder => "Bottom Text" %>
+      </div>
+      <div class="col-md-2"></div>
+	  </div>
+    <%= f.primary %>
+    <% end %>
+	  <br>
+    <br>
+    <div class="xmeme" id="meme">
+      <figure>
+        <figcaption id="topcaption"></figcaption>
+        <img id="memeimg">
+        <figcaption id="botcaption"></figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
+<div class="clearfix"></div>
 
-<%= render 'form', meme: @meme %>
+<% content_for :footerjs do %>
+	<!-- for meme_gen.js -->
+ 	<script type="text/javascript">
+    var template_id;
+    var scale_text = function($figcaption) {
+      var image_width = $("#memeimg").width();
+      var pts = image_width / 6.0;
+      var scale = 1.0;
+      var text = $figcaption.text();
+      if (text.length < 10) {
+        scale = 1.0;
+      }
+      else if (text.length < 24) {
+        scale = 0.70;
+      } else if (text.length < 48) {
+        scale = 0.5;
+      } else {
+        scale = 0.4;
+      }
+      $figcaption.css('font-size', scale * pts);
+      $figcaption.css('line-height', pts / 1.1 * scale + "pt");
+      return $figcaption;
+    }
+    $('#top-line').on('keyup', function() {
+      $('#topcaption').text($(this).val());
+      scale_text($('#topcaption'));
+    })
+    $('#bottom-line').on('keyup', function() {
+      $('#botcaption').text($(this).val());
+      scale_text($('#botcaption'));
+    })
+    $("#new_meme").submit( function(eventObj) {
+      $('<input />').attr('type', 'hidden')
+          .attr('name', "meme[template_id]")
+          .attr('value', template_id)
+          .appendTo('#new_meme');
+    });
+ 	</script>
 
-<%= link_to 'Back', memes_path %>
+	<script type="text/javascript">
+    $("#template-search").keyup(_.debounce(function() {
+      if ($(this).val().trim()) {
+        $.ajax({
+          url: '/templates',
+          context: document.body,
+          data: {
+            query: $(this).val(),
+          },
+          dataType: "script",
+          success: function() {
+                      $('.template-img').click(function(event) {
+                        $('#memeimg').attr('src', $(this).attr('src'));
+                        template_id = $(this).data("template-id");
+                        scale_text($('#topcaption'));
+                        scale_text($('#botcaption'));
+                      });
+                    },
+        });
+      } else {
+        $("#results").html("");
+      }
+    }, 500));
+	</script>
+<% end %>
+
+
