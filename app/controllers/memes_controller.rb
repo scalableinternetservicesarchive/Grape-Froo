@@ -1,4 +1,4 @@
-require 'Memeutil'
+require 'memeutil'
 class MemesController < ApplicationController
   before_action :set_meme, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]

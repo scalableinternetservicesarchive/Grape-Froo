@@ -1,5 +1,5 @@
 require 'tempfile'
-require 'RMagick'
+require 'rmagick'
 # Adapted from github.com/cmdrkeene/memegen
 module Memeutil
   class << self
