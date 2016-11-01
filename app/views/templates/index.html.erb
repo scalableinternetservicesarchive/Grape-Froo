@@ -17,7 +17,7 @@
   <% @templates.each do |template| %>
     <div class="col-xs-6 col-sm-4 col-md-3 card">
       <div class="thumbnail">
-        <%= link_to(image_tag(template.url, :class => "template-img"),
+        <%= link_to(image_tag(template.image.url, :class => "template-img"),
                     template, :title => template.name) %>
     </div>
     </div>
