@@ -163,9 +163,11 @@ div.col-md-3 > form {
 .xmeme figcaption:first-child
 {
     top: 0;
+    padding-top: 0;
 }
 
 .xmeme figcaption:last-child
 {
     bottom: 0;
+    padding-bottom: 0;
 }

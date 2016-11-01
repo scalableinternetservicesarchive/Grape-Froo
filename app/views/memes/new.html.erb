@@ -41,11 +41,32 @@
 	<!-- for meme_gen.js -->
  	<script type="text/javascript">
     var template_id;
+    var scale_text = function($figcaption) {
+      var image_width = $("#memeimg").width();
+      var pts = image_width / 6.0;
+      var scale = 1.0;
+      var text = $figcaption.text();
+      if (text.length < 10) {
+        scale = 1.0;
+      }
+      else if (text.length < 24) {
+        scale = 0.70;
+      } else if (text.length < 48) {
+        scale = 0.5;
+      } else {
+        scale = 0.4;
+      }
+      $figcaption.css('font-size', scale * pts);
+      $figcaption.css('line-height', pts / 1.1 * scale + "pt");
+      return $figcaption;
+    }
     $('#top-line').on('keyup', function() {
       $('#topcaption').text($(this).val());
+      scale_text($('#topcaption'));
     })
     $('#bottom-line').on('keyup', function() {
       $('#botcaption').text($(this).val());
+      scale_text($('#botcaption'));
     })
     $("#new_meme").submit( function(eventObj) {
       $('<input />').attr('type', 'hidden')
@@ -69,6 +90,8 @@
                       $('.template-img').click(function(event) {
                         $('#memeimg').attr('src', $(this).attr('src'));
                         template_id = $(this).data("template-id");
+                        scale_text($('#topcaption'));
+                        scale_text($('#botcaption'));
                       });
                     },
         });
