@@ -7,6 +7,10 @@ class TemplatesController < ApplicationController
   def index
     if params[:query].present?
       @templates = Template.where("lower(name) LIKE ?", "%#{params[:query].downcase}%")
+      respond_to do |format|
+        format.html { }
+        format.js { @templates = @templates.limit(10) }
+      end
     else
       @templates = Template.all
     end

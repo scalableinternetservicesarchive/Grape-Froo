@@ -10,4 +10,8 @@ class Template < ApplicationRecord
     self.image = URI.escape(url_value)
     @url = url_value
   end
+
+  def to_s
+    self.name
+  end
 end
