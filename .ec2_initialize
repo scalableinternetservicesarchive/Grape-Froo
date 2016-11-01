@@ -1,1 +1,2 @@
 sudo yum install -y patch sqlite-devel ImageMagick ImageMagick-devel
+sudo sed -i.bak '/HTTPS/d' /etc/ImageMagick/policy.xml
