@@ -92,6 +92,6 @@ Rails.application.configure do
       :region => 'us-west-2'
     },
     :fog_directory => 'scalableinternetservices',
-    :path => 'Grape-Froo/'
+    :path => 'Grape-Froo/:class/:filename'
   }
 end
