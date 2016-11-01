@@ -1,4 +1,4 @@
-sudo yum install -y patch sqlite-devel zsh
+sudo yum install -y patch sqlite-devel zsh imagemagick
 echo "auth       sufficient   pam_wheel.so trust group=chsh" | cat - /etc/pam.d/chsh > /tmp/chsh && sudo mv /tmp/chsh /etc/pam.d/chsh
 sudo groupadd chsh
 sudo usermod -a -G chsh ec2-user

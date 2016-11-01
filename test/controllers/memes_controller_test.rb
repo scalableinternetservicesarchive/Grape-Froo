@@ -17,7 +17,7 @@ class MemesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create meme" do
     assert_difference('Meme.count') do
-      post memes_url, params: { meme: { bottom_caption: @meme.bottom_caption, template_id: @meme.template_id, top_caption: @meme.top_caption, url: @meme.url, user_id: @meme.user_id } }
+      post memes_url, params: { meme: { bottom_caption: @meme.bottom_caption, template_id: @meme.template_id, top_caption: @meme.top_caption, image: @meme.image, user_id: @meme.user_id } }
     end
 
     assert_redirected_to meme_url(Meme.last)
@@ -34,7 +34,7 @@ class MemesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update meme" do
-    patch meme_url(@meme), params: { meme: { bottom_caption: @meme.bottom_caption, template_id: @meme.template_id, top_caption: @meme.top_caption, url: @meme.url, user_id: @meme.user_id } }
+    patch meme_url(@meme), params: { meme: { bottom_caption: @meme.bottom_caption, template_id: @meme.template_id, top_caption: @meme.top_caption, image: @meme.image, user_id: @meme.user_id } }
     assert_redirected_to meme_url(@meme)
   end
 

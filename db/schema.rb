@@ -10,26 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161031053024) do
+ActiveRecord::Schema.define(version: 20161031091806) do
 
   create_table "memes", force: :cascade do |t|
-    t.string   "url"
     t.string   "top_caption"
     t.string   "bottom_caption"
     t.integer  "template_id"
     t.integer  "user_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
     t.index ["template_id"], name: "index_memes_on_template_id"
     t.index ["user_id"], name: "index_memes_on_user_id"
   end
 
   create_table "templates", force: :cascade do |t|
     t.string   "name"
-    t.text     "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.integer  "user_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
     t.index ["name"], name: "index_templates_on_name", unique: true
     t.index ["user_id"], name: "index_templates_on_user_id"
   end
