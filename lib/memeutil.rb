@@ -9,8 +9,9 @@ module Memeutil
       if template_img.starts_with?('//')
         template_img = 'http:' + template_img
       end
-      canvas = Magick::ImageList.new(template_img)
-      image = canvas.first
+      old_canvas = Magick::ImageList.new(template_img)
+      new_canvas = Magick::ImageList.new
+      image = old_canvas.first
 
       draw = Magick::Draw.new
       draw.font = File.join(Rails.root, "lib/Impact.ttf")
@@ -19,38 +20,41 @@ module Memeutil
       pointsize = image.columns / 5.0
       stroke_width = pointsize / 30.0
 
-      # Draw top
-      unless top.empty?
-        scale, text = scale_text(top)
-        top_draw = draw.dup
-        top_draw.annotate(canvas, 0, 0, 0, 0, text) do
-          self.interline_spacing = -(pointsize / INTERLINE_SPACING_RATIO) * scale
-          self.stroke_antialias(true)
-          self.stroke = "black"
-          self.fill = "white"
-          self.gravity = Magick::NorthGravity
-          self.stroke_width = stroke_width * scale
-          self.pointsize = pointsize * scale
+      old_canvas.each do |canvas|
+        # Draw top
+        unless top.empty?
+          scale, text = scale_text(top)
+          top_draw = draw.dup
+          top_draw.annotate(canvas, 0, 0, 0, 0, text) do
+            self.interline_spacing = -(pointsize / INTERLINE_SPACING_RATIO) * scale
+            self.stroke_antialias(true)
+            self.stroke = "black"
+            self.fill = "white"
+            self.gravity = Magick::NorthGravity
+            self.stroke_width = stroke_width * scale
+            self.pointsize = pointsize * scale
+          end
         end
-      end
-      # Draw bottom
-      unless bottom.empty?
-        scale, text = scale_text(bottom)
-        bottom_draw = draw.dup
-        bottom_draw.annotate(canvas, 0, 0, 0, 0, text) do
-          self.interline_spacing = -(pointsize / INTERLINE_SPACING_RATIO) * scale
-          self.stroke_antialias(true)
-          self.stroke = "black"
-          self.fill = "white"
-          self.gravity = Magick::SouthGravity
-          self.stroke_width = stroke_width * scale
-          self.pointsize = pointsize * scale
+        # Draw bottom
+        unless bottom.empty?
+          scale, text = scale_text(bottom)
+          bottom_draw = draw.dup
+          bottom_draw.annotate(canvas, 0, 0, 0, 0, text) do
+            self.interline_spacing = -(pointsize / INTERLINE_SPACING_RATIO) * scale
+            self.stroke_antialias(true)
+            self.stroke = "black"
+            self.fill = "white"
+            self.gravity = Magick::SouthGravity
+            self.stroke_width = stroke_width * scale
+            self.pointsize = pointsize * scale
+          end
         end
+        new_canvas.push canvas
       end
       ext = File.extname(URI.parse(template_img).path)
       file = Tempfile.new([rand(36**10).to_s(36), ext])
       file.binmode
-      file.write(canvas.to_blob)
+      file.write(new_canvas.to_blob)
       return file
     end
 
