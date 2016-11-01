@@ -47,6 +47,9 @@
   height: 150px !important;
 }
 
+#meme {
+  height: 500px !important;
+}
 
 // Search bar in main content panel (i.e. for templates)
 div.col-md-3 > form {
@@ -100,4 +103,71 @@ div.col-md-3 > form {
   .col-fluid {
     width: calc(100% - #{$colwidth});
   }
+}
+/*
+ * X-Meme HTML5 Web Component by Martin Ivanov (@wemakesitesnet)
+ **/
+
+.xmeme,
+.xmeme *
+{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.xmeme
+{
+    visibility: visible !important;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    cursor: default;
+    // border: solid 1px #000;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    font-size: 2em;
+}
+
+.xmeme figure
+{
+    position: relative;
+}
+
+.xmeme img
+{
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+.xmeme figcaption
+{
+    position: absolute;
+    z-index: 5;
+    width: 100%;
+    padding: .25em;
+    font: normal .75em Impact, Arial, Verdana, Sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+    text-shadow: 3px 3px 0 #000,
+                -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    word-wrap: break-word;
+}
+
+.xmeme figcaption:first-child
+{
+    top: 0;
+    padding-top: 0;
+}
+
+.xmeme figcaption:last-child
+{
+    bottom: 0;
+    padding-bottom: 0;
 }

@@ -20,4 +20,7 @@ class Template < ApplicationRecord
   validates_with UrlValidator, fields: [:url]
   belongs_to :user
   has_many :meme
+  def to_s
+    self.name
+  end
 end
