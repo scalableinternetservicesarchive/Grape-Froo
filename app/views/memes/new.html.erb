@@ -41,6 +41,7 @@
 	<!-- for meme_gen.js -->
  	<script type="text/javascript">
     var template_id;
+    const events = "keyup change focus blur input reset text";
     var scale_text = function($figcaption) {
       var image_width = $("#memeimg").width();
       var pts = image_width / 6.0;
@@ -60,11 +61,11 @@
       $figcaption.css('line-height', pts / 1.1 * scale + "pt");
       return $figcaption;
     }
-    $('#top-line').on('keyup', function() {
+    $('#top-line').on(events, function() {
       $('#topcaption').text($(this).val());
       scale_text($('#topcaption'));
     })
-    $('#bottom-line').on('keyup', function() {
+    $('#bottom-line').on(events, function() {
       $('#botcaption').text($(this).val());
       scale_text($('#botcaption'));
     })
@@ -83,7 +84,7 @@
  	</script>
 
 	<script type="text/javascript">
-    $("#template-search").keyup(_.debounce(function() {
+    $("#template-search").on(events, _.debounce(function() {
       if ($(this).val().trim()) {
         $.ajax({
           url: '/templates',
