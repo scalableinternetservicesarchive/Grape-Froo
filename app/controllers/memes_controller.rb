@@ -1,6 +1,6 @@
 require 'memeutil'
 class MemesController < ApplicationController
-  before_action :set_meme, only: [:show, :edit, :update, :destroy]
+  before_action :set_meme, only: [:show, :edit, :update, :destroy, :vote]
   before_action :authenticate_user!, except: [:index, :show]
 
   # GET /memes
@@ -66,6 +66,27 @@ class MemesController < ApplicationController
       format.html { redirect_to memes_url, notice: 'Meme was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  # return 1 for upvote created
+  #        0 for vote deleted
+  #       -1 for downvote created
+  def vote
+    vote = Vote.find_by(meme: @meme, user: current_user)
+    value = params[:value] == "true"
+    ret = 0
+    if vote.present?
+      if vote.value == value
+        vote.delete
+      else
+        vote.update(value: value)
+        ret = value ? 1 : -1
+      end
+    else
+      Vote.create(meme: @meme, user: current_user, value: value)
+      ret = value ? 1 : -1
+    end
+    render json: ret
   end
 
   private

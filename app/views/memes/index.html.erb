@@ -30,6 +30,29 @@
   </tbody>
 </table>
 
+<div class="row">
+
+  <% @memes.each do |meme| %>
+    <div class="col-xs-6 col-sm-4 col-md-3 card">
+      <div class="thumbnail">
+        <%= link_to(image_tag(meme.image.url, :class => "meme-img", :data => { :memeid => meme.id }),
+               meme, :title => meme.top_caption) %>
+      </div>
+
+      <%= button_tag(type: 'button', class: ["btn", "btn-default", "up-vote-button"], data: { memeid: meme.id }) do
+          content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-up"]) 
+          end
+      %>
+
+      <%= button_tag(type: 'button', class: ["btn", "btn-default", "down-vote-button"], data: { memeid: meme.id }) do
+          content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-down"]) 
+          end
+      %>
+    </div>
+  <% end %>
+
+</div>
+
 <br>
 
 <%= link_to 'New Meme', new_meme_path %>

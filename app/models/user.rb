@@ -31,4 +31,5 @@ class User < ApplicationRecord
 
   has_many :template
   has_many :meme
+  has_many :votes
 end
