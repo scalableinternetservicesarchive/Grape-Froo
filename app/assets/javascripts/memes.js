@@ -23,13 +23,22 @@ var vote_ready = function() {
 		}
 	};
 
-	$('.up-vote-button').on("click", function () {
-
-		console.log(1);
+	$("[class$='vote-button']").on("click", function () {
 		var memeid = $(this).data("memeid");
-		var up_arrow = $(this).find('.glyphicon-arrow-up');
-		var down_arrow = $(this).parent().find('.glyphicon-arrow-down');
-		var vote_url = "/memes/" + memeid + "/upvote";
+		var up_arrow, down_arrow, end_path;	 
+
+		if ($(this).attr('class').indexOf('up') != -1) {
+			up_arrow = $(this).find('.glyphicon-arrow-up');
+			down_arrow = $(this).parent().find('.glyphicon-arrow-down');
+			end_path = "/upvote"
+		}
+		else {
+			down_arrow = $(this).find('.glyphicon-arrow-down');
+			up_arrow = $(this).parent().find('.glyphicon-arrow-up');
+			end_path = "/downvote"
+		}
+
+		var vote_url = "/memes/" + memeid + end_path
 
 		$.ajax({
 			type : "POST",
@@ -40,23 +49,6 @@ var vote_ready = function() {
 			}
 		})
 	});
-
-	$('.down-vote-button').on("click", function () {
-		var memeid = $(this).data("memeid");
-		var down_arrow = $(this).find('.glyphicon-arrow-down');
-		var up_arrow = $(this).parent().find('.glyphicon-arrow-up');
-		var vote_url = "/memes/" + memeid + "/downvote";
-
-		$.ajax({
-			type : "POST",
-			url : vote_url,
-
-			success: function upVote(result) {
-				color_arrows(result, up_arrow, down_arrow);
-			}
-		})
-	});
-
 };
 
 $(document).on('turbolinks:load', vote_ready);
