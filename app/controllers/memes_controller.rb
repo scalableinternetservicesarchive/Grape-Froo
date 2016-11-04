@@ -1,3 +1,4 @@
+require 'memeutil'
 class MemesController < ApplicationController
   before_action :set_meme, only: [:show, :edit, :update, :destroy, :vote]
   before_action :authenticate_user!, except: [:index, :show]
@@ -28,6 +29,8 @@ class MemesController < ApplicationController
   def create
     @meme = Meme.new(meme_params)
     @meme.user = current_user
+    output = Memeutil.memeify(@meme.template.image.url, @meme.top_caption, @meme.bottom_caption)
+    @meme.image = output
     respond_to do |format|
       if @meme.save
         format.html { redirect_to @meme, notice: 'Meme was successfully created.' }
@@ -125,6 +128,6 @@ class MemesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def meme_params
-      params.require(:meme).permit(:url, :top_caption, :bottom_caption, :template_id, :user_id)
+      params.require(:meme).permit(:image, :top_caption, :bottom_caption, :template_id, :user_id)
     end
 end

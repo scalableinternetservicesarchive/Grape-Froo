@@ -7,6 +7,10 @@ class TemplatesController < ApplicationController
   def index
     if params[:query].present?
       @templates = Template.where("lower(name) LIKE ?", "%#{params[:query].downcase}%")
+      respond_to do |format|
+        format.html { }
+        format.js { @templates = @templates.limit(10) }
+      end
     else
       @templates = Template.all
     end
@@ -77,6 +81,6 @@ class TemplatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def template_params
-      params.require(:template).permit(:name, :url)
+      params.require(:template).permit(:name, :url, :image)
     end
 end

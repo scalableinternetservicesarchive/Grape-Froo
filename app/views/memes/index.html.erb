@@ -17,7 +17,7 @@
   <tbody>
     <% @memes.each do |meme| %>
       <tr>
-        <td><%= meme.url %></td>
+        <td><%= meme.image.url %></td>
         <td><%= meme.top_caption %></td>
         <td><%= meme.bottom_caption %></td>
         <td><%= meme.template %></td>

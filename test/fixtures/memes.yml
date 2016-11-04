@@ -1,14 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  url: MyString
+  image: MyString
   top_caption: MyString
   bottom_caption: MyString
   template: one
   user: one
 
 two:
-  url: MyString
+  image: MyString
   top_caption: MyString
   bottom_caption: MyString
   template: two
