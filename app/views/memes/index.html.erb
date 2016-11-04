@@ -35,7 +35,7 @@
   <% @memes.each do |meme| %>
     <div class="col-xs-6 col-sm-4 col-md-3 card">
       <div class="thumbnail">
-        <%= link_to(image_tag(meme.url, :class => "meme-img", :data => { :memeid => meme.id }),
+        <%= link_to(image_tag(meme.image.url, :class => "meme-img", :data => { :memeid => meme.id }),
                meme, :title => meme.top_caption) %>
       </div>
 

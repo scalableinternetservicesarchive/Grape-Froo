@@ -68,56 +68,25 @@ class MemesController < ApplicationController
     end
   end
 
-  def upvote
-    @vote = Vote.where(meme_id: params[:id], user: current_user)
-
-    @return = 0
-
-    if @vote.count != 0
-      @vote_value = @vote[0].value
-      @vote.destroy_all
-
-      if @vote_value == false
-        Vote.create(meme_id: params[:id], user: current_user, value: true)
-        @return = 1
+  # return 1 for upvote created
+  #        0 for vote deleted
+  #       -1 for downvote created
+  def vote
+    vote = Vote.find_by(meme: @meme, user: current_user)
+    value = params[:value] == "true"
+    ret = 0
+    if vote.present?
+      if vote.value == value
+        vote.delete
+      else
+        vote.update(value: value)
+        ret = value ? 1 : -1
       end
     else
-      Vote.create(meme_id: params[:id], user: current_user, value: true)
-      @return = 1
+      Vote.create(meme: @meme, user: current_user, value: value)
+      ret = value ? 1 : -1
     end
-
-    # Return value
-    #   -1, upvote created
-    #   0, any vote deleted
-    #   1, downvote created
-
-    render :json => @return
-  end
-
-  def downvote
-    @vote = Vote.where(meme_id: params[:id], user: current_user)
-
-    if @vote.count != 0
-      @vote_value = @vote[0].value
-      @vote.destroy_all
-
-      @return = 0;
-
-      if @vote_value == true
-        Vote.create(meme_id: params[:id], user: current_user, value: false)
-        @return = -1
-      end
-    else
-      Vote.create(meme_id: params[:id], user: current_user, value: false)
-      @return = -1
-    end
-
-    # Return value
-    #   -1, upvote created
-    #   0, any vote deleted
-    #   1, downvote created
-
-    render :json => @return
+    render json: ret
   end
 
   private
