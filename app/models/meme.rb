@@ -6,4 +6,8 @@ class Meme < ApplicationRecord
 
   has_attached_file :image
   validates_attachment :image, presence: true, content_type: { content_type: ["image/jpeg", "image/gif", "image/png"]  }
+
+  def root_comments
+    comments.where parent_id: nil
+  end
 end

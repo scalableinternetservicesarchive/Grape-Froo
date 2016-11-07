@@ -1,0 +1,6 @@
+<div class="well well-sm" style="margin-top: 10px">
+  	<%= comment.user.username %>:
+  	<%= comment.message %><br>
+  	<%= link_to 'Reply', new_comment_path(comment: { meme_id: comment.meme.id, user_id: current_user.id, parent_id: comment.id }) %>
+  	<%= render comment.replies %>
+</div>
