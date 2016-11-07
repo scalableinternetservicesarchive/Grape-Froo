@@ -24,6 +24,12 @@ class User < ApplicationRecord
       where(conditions.to_h).first
     end
   end
+
+  def to_s
+    self.username
+  end
+
   has_many :template
   has_many :meme
+  has_many :votes
 end

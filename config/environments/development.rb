@@ -52,5 +52,21 @@ Rails.application.configure do
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  if Gem::Platform.local.os != "linux"
+	  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  end
+
+  config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_credentials => {
+      :bucket => "scalableinternetservices",
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+      :s3_region => 'us-west-2',
+    },
+    :s3_host_name => 's3-us-west-2.amazonaws.com',
+    :path => 'Grape-Froo/:class/:hash.:extension',
+    :hash_data => ':id/:filename',
+    :hash_secret => '80d3c184f53f5111833a2eff40ff81480c69cb1f69980883be885c1da5fd2b9f600a1c6ca91c7e59d9893b58354a5d34f1fde9519a5d616354a7a0b1b5a5ec1d'
+  }
 end

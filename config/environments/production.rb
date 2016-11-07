@@ -83,4 +83,17 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.paperclip_defaults = {
+    :storage => :fog,
+    :fog_credentials => {
+      :use_iam_profile => true,
+      :provider => 'AWS',
+      :region => 'us-west-2'
+    },
+    :fog_directory => 'scalableinternetservices',
+    :path => 'Grape-Froo/:class/:hash.:extension',
+    :hash_data => ':id/:filename',
+    :hash_secret => '80d3c184f53f5111833a2eff40ff81480c69cb1f69980883be885c1da5fd2b9f600a1c6ca91c7e59d9893b58354a5d34f1fde9519a5d616354a7a0b1b5a5ec1d'
+  }
 end

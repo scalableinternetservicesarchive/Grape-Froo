@@ -51,8 +51,15 @@ gem 'json'
 # Get some styles
 gem 'bootstrap-sass', '3.3.6'
 gem 'bootstrap_form', '2.5.2'
+gem 'underscore-rails'
+# Authentication and authorization
 gem 'devise'
 gem 'pundit'
+# Meme generation and uploads
+gem 'rmagick', :require => false
+gem 'paperclip'
+gem 'fog'
+gem 'aws-sdk'
 
 # Pagination
 gem 'will_paginate-bootstrap'

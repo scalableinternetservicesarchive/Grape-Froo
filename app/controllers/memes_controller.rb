@@ -1,5 +1,6 @@
+require 'memeutil'
 class MemesController < ApplicationController
-  before_action :set_meme, only: [:show, :edit, :update, :destroy]
+  before_action :set_meme, only: [:show, :edit, :update, :destroy, :vote]
   before_action :authenticate_user!, except: [:index, :show]
 
   # GET /memes
@@ -28,6 +29,8 @@ class MemesController < ApplicationController
   def create
     @meme = Meme.new(meme_params)
     @meme.user = current_user
+    output = Memeutil.memeify(@meme.template.image.url, @meme.top_caption, @meme.bottom_caption)
+    @meme.image = output
     respond_to do |format|
       if @meme.save
         format.html { redirect_to @meme, notice: 'Meme was successfully created.' }
@@ -65,6 +68,27 @@ class MemesController < ApplicationController
     end
   end
 
+  # return 1 for upvote created
+  #        0 for vote deleted
+  #       -1 for downvote created
+  def vote
+    vote = Vote.find_by(meme: @meme, user: current_user)
+    value = params[:value] == "true"
+    ret = 0
+    if vote.present?
+      if vote.value == value
+        vote.delete
+      else
+        vote.update(value: value)
+        ret = value ? 1 : -1
+      end
+    else
+      Vote.create(meme: @meme, user: current_user, value: value)
+      ret = value ? 1 : -1
+    end
+    render json: ret
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_meme
@@ -73,6 +97,6 @@ class MemesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def meme_params
-      params.require(:meme).permit(:url, :top_caption, :middle_caption, :bottom_caption, :template_id, :user_id)
+      params.require(:meme).permit(:image, :top_caption, :bottom_caption, :template_id, :user_id)
     end
 end

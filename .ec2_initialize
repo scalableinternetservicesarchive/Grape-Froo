@@ -1,9 +1,2 @@
-sudo yum install -y patch sqlite-devel zsh
-echo "auth       sufficient   pam_wheel.so trust group=chsh" | cat - /etc/pam.d/chsh > /tmp/chsh && sudo mv /tmp/chsh /etc/pam.d/chsh
-sudo groupadd chsh
-sudo usermod -a -G chsh ec2-user
-git clone https://github.com/gautamg795/dotfiles.git /home/ec2-user/dotfiles
-pushd /home/ec2-user/dotfiles
-git checkout amazon
-./install
-popd
+sudo yum install -y patch sqlite-devel ImageMagick ImageMagick-devel
+sudo sed -i.bak '/HTTPS/d' /etc/ImageMagick/policy.xml

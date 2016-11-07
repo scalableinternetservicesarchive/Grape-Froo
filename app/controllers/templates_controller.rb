@@ -6,9 +6,11 @@ class TemplatesController < ApplicationController
   # GET /templates.json
   def index
     if params[:query].present?
-      @templates = Template
-        .where("lower(name) LIKE ?", "%#{params[:query].downcase}%")
-        .paginate(:page => params[:page])
+      @templates = Template.where("lower(name) LIKE ?", "%#{params[:query].downcase}%")
+      respond_to do |format|
+        format.html { @templates = @templates.paginate(:page => params[:page]) }
+        format.js { @templates = @templates.limit(10) }
+      end
     else
       @templates = Template.order(created_at: :desc).paginate(:page => params[:page])
     end
@@ -79,6 +81,6 @@ class TemplatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def template_params
-      params.require(:template).permit(:name, :url)
+      params.require(:template).permit(:name, :url, :image)
     end
 end
