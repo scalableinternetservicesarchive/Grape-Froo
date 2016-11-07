@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161031091806) do
+ActiveRecord::Schema.define(version: 20161106022442) do
+
+  create_table "comments", force: :cascade do |t|
+    t.text     "message"
+    t.integer  "user_id"
+    t.integer  "meme_id"
+    t.integer  "parent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meme_id"], name: "index_comments_on_meme_id"
+    t.index ["parent_id"], name: "index_comments_on_parent_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "memes", force: :cascade do |t|
     t.string   "top_caption"
