@@ -20,7 +20,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
       post comments_url, params: { comment: { meme_id: @comment.meme_id, message: @comment.message, parent_id: @comment.parent_id, user_id: @comment.user_id } }
     end
 
-    assert_redirected_to comment_url(Comment.last)
+    assert_redirected_to meme_url(Comment.last.meme)
   end
 
   test "should show comment" do
