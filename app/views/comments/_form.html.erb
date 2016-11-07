@@ -11,24 +11,21 @@
     </div>
   <% end %>
 
+  <div>
+    <%= f.hidden_field :meme_id, value: comment.meme.id %>
+    <%= f.hidden_field :user_id, value: comment.user.id %>
+  </div>
+
+  <% if @comment.parent %>
+    <div>
+      In response to: <%= @comment.parent.message %>
+      <%= f.hidden_field :parent_id, value: comment.parent.id %>
+    </div>
+  <% end %>
+
   <div class="field">
     <%= f.label :message %>
     <%= f.text_area :message %>
-  </div>
-
-  <div class="field">
-    <%= f.label :user_id %>
-    <%= f.text_field :user_id %>
-  </div>
-
-  <div class="field">
-    <%= f.label :meme_id %>
-    <%= f.text_field :meme_id %>
-  </div>
-
-  <div class="field">
-    <%= f.label :parent_id %>
-    <%= f.text_field :parent_id %>
   </div>
 
   <div class="actions">
