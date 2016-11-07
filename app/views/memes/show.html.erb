@@ -25,7 +25,7 @@
   <%= @meme.user %>
 </p>
 
-<% if(@meme.root_comments.present?) %>
+<% if @meme.root_comments.present? %>
   <p>
     <strong>Comments:</strong>
     <%= render @meme.root_comments %>
