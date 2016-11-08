@@ -1,5 +1,4 @@
 require 'test_helper'
-
 class TemplatesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @template = templates(:one)
@@ -11,13 +10,16 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new" do
+    sign_in User.first
     get new_template_url
     assert_response :success
   end
 
   test "should create template" do
+    sign_in User.first
     assert_difference('Template.count') do
-      post templates_url, params: { template: { name: @template.name, image: @template.image } }
+      post templates_url, params: { template: { name: @template.name + "_",
+                                                url: "http://i.imgur.com/bCBt6ga.jpg" } }
     end
 
     assert_redirected_to template_url(Template.last)
@@ -28,21 +30,4 @@ class TemplatesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get edit" do
-    get edit_template_url(@template)
-    assert_response :success
-  end
-
-  test "should update template" do
-    patch template_url(@template), params: { template: { name: @template.name, image: @template.image } }
-    assert_redirected_to template_url(@template)
-  end
-
-  test "should destroy template" do
-    assert_difference('Template.count', -1) do
-      delete template_url(@template)
-    end
-
-    assert_redirected_to templates_url
-  end
 end
