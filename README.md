@@ -1,4 +1,4 @@
-# GenMeme
+# GenMeme ![](https://travis-ci.org/scalableinternetservices/Grape-Froo.svg?branch=master)
 Generate memes.
 
 Team Members:
