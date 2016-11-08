@@ -6,13 +6,13 @@ class TemplatesController < ApplicationController
   # GET /templates.json
   def index
     if params[:query].present?
-      @templates = Template.where("lower(name) LIKE ?", "%#{params[:query].downcase}%")
+      @templates = Template.where("lower(name) LIKE ?", "%#{params[:query].downcase}%").limit(100)
       respond_to do |format|
         format.html { @templates = @templates.paginate(:page => params[:page]) }
         format.js { @templates = @templates.limit(10) }
       end
     else
-      @templates = Template.order(created_at: :desc).paginate(:page => params[:page])
+      @templates = Template.order(created_at: :desc).limit(500).paginate(:page => params[:page])
     end
   end
 
