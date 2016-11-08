@@ -1,4 +1,4 @@
-class AddAttachmentImageToMemes < ActiveRecord::Migration
+class AddAttachmentImageToMemes < ActiveRecord::Migration[5.0]
   def self.up
     change_table :memes do |t|
       t.attachment :image
