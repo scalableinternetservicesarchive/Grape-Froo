@@ -3,9 +3,9 @@
 one:
   user: one
   meme: one
-  vote: false
+  value: true
 
 two:
   user: two
   meme: two
-  vote: false
+  value: false
