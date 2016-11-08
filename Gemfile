@@ -63,3 +63,5 @@ gem 'aws-sdk'
 
 # Pagination
 gem 'will_paginate-bootstrap'
+
+gem 'possessive'

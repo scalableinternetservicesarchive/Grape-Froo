@@ -1,26 +1,24 @@
-<% provide(:title, "My Templates") %>
-
+<% provide(:title, "#{@user_str} Templates") %>
+<%= render "tabs" %>
 <div class="row">
-	<ul class="nav nav-tabs">
-	  <li role="presentation">
-	  	<%= link_to "My Profile", user_path %>
-	  </li>
-	  <li role="presentation">
-	  	<%= link_to "My memes", user_memes_path %>
-	  </li>
-	  <li role="presentation" class="active">
-	  	<%= link_to "My Templates", user_templates_path %>
-	  </li>
-	</ul>
+  <% @templates.each do |template| %>
+    <div class="col-xs-6 col-sm-4 col-md-3 card">
+      <div class="thumbnail">
+        <%= link_to(image_tag(template.image.url, :class => "card-img"),
+               template, :title => template.name) %>
+      </div>
+    </div>
+  <% end %>
 </div>
-
 <div class="row">
-	<% @user.template.each do |template| %>
-		<div class="col-xs-6 col-sm-4 col-md-3 card">
-			<div class="thumbnail">
-				<%= link_to(image_tag(template.image.url, :class => "template-img"),
-						   template, :title => template.name) %>
-			</div>
-		</div>
-	<% end %>
+  <div class="col-md-12">
+    <div class="text-center">
+      <%= will_paginate @templates, renderer: BootstrapPagination::Rails %>
+    </div>
+  </div>
 </div>
+<% content_for :footerjs do %>
+<script type="text/javascript">
+$("#user-templates").addClass("active");
+</script>
+<% end %>

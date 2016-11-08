@@ -1,18 +1,7 @@
-<% provide(:title, "My Profile") %>
-
-<div class="row">
-	<ul class="nav nav-tabs">
-	  <li role="presentation" class="active">
-	  	<%= link_to "My Profile", user_path %>
-	  </li>
-	  <li role="presentation">
-	  	<%= link_to "My memes", user_memes_path %>
-	  </li>
-	  <li role="presentation">
-	  	<%= link_to "My Templates", user_templates_path %>
-	  </li>
-	</ul>
-</div>
-
-
-
+<% provide(:title, "#{@user_str} Profile") %>
+<%= render "tabs" %>
+<% content_for :footerjs do %>
+<script type="text/javascript">
+$("#user-profile").addClass("active");
+</script>
+<% end %>
