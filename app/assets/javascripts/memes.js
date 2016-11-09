@@ -26,6 +26,7 @@ var vote_ready = function() {
     var up_arrow = $(this).parent().find('.glyphicon-arrow-up')
     var down_arrow = $(this).parent().find('.glyphicon-arrow-down')
     var value = $(this).attr('class').indexOf('up') != -1; // true for upvote
+    value = value ? 1 : -1;
     var vote_url = "/memes/" + memeid + "/vote";
 
     $.ajax({
