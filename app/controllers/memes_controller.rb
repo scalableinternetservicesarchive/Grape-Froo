@@ -73,18 +73,18 @@ class MemesController < ApplicationController
   #       -1 for downvote created
   def vote
     vote = Vote.find_by(meme: @meme, user: current_user)
-    value = params[:value] == "true"
+    value = params[:value].to_i
     ret = 0
     if vote.present?
       if vote.value == value
         vote.delete
       else
         vote.update(value: value)
-        ret = value ? 1 : -1
+        ret = value
       end
     else
       Vote.create(meme: @meme, user: current_user, value: value)
-      ret = value ? 1 : -1
+      ret = value
     end
     render json: ret
   end

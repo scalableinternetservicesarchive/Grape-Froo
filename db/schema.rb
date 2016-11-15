@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161106022442) do
+ActiveRecord::Schema.define(version: 20161107211113) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "message"
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20161106022442) do
   create_table "votes", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "meme_id"
-    t.boolean  "value"
+    t.integer  "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["meme_id"], name: "index_votes_on_meme_id"
