@@ -4,10 +4,8 @@ one:
   message: MyText
   user: one
   meme: one
-  parent: one
 
 two:
   message: MyText
   user: two
   meme: two
-  parent: two
