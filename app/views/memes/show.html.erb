@@ -25,5 +25,15 @@
   <%= @meme.user %>
 </p>
 
+<% if @meme.root_comments.present? %>
+  <p>
+    <strong>Comments:</strong>
+    <%= render @meme.root_comments %>
+  </p>
+<% end %>
+
 <%= link_to 'Edit', edit_meme_path(@meme) %> |
 <%= link_to 'Back', memes_path %>
+<% if user_signed_in? %>
+  | <%= link_to 'Comment', new_comment_path(comment: { meme_id: @meme.id, user_id: current_user.id }) %>
+<% end %>
