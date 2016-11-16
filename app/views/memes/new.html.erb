@@ -40,6 +40,7 @@
 <% content_for :footerjs do %>
 	<!-- for meme_gen.js -->
  	<script type="text/javascript">
+    $("input.btn").attr('disabled', true);
     var template_id;
     const events = "keyup change focus blur input reset text";
     var scale_text = function($figcaption) {
@@ -95,6 +96,7 @@
           dataType: "script",
           success: function() {
                       $('.template-img').click(function(event) {
+                        $('input.btn').attr('disabled', false);
                         $('#memeimg').attr('src', $(this).attr('src'));
                         template_id = $(this).data("template-id");
                         scale_text($('#topcaption'));
