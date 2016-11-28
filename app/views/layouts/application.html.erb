@@ -45,8 +45,8 @@
                                 "logo"), root_path, :class => "navbar-brand") %>
         </div>
         <div class="collapse navbar-collapse" id="nav-collapse">
-          <%= bootstrap_form_tag url: '/search', method: "get", layout: :inline do |f| %>
-              <%= f.text_field :query, skip_label: true, placeholder: "Search memes", id:"searchbar" %>
+          <%= bootstrap_form_tag url: '/search', method: "get", layout: :inline, html: { class: 'navbar-form navbar-left' } do |f| %>
+              <%= f.text_field :query, skip_label: true, placeholder: "Search memes", id: "searchbar" %>
               <%= f.submit 'Submit', name: nil%>
           <% end %>
           <ul class="nav navbar-right navbar-nav">
