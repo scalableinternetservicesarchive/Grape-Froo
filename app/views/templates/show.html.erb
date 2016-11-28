@@ -5,8 +5,11 @@
 </p>
 
 <p>
-  <strong>Url:</strong>
-  <%= @template.image.url %>
+  <%= image_tag(@template.image.url, :id => "template") %>
+</p>
+
+<p>
+  submitted <%= time_ago_in_words(@template.created_at) %> ago by <em><%= @template.user %></em>
 </p>
 
 <%= link_to 'Edit', edit_template_path(@template) %> |
