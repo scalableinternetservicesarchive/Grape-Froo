@@ -8,7 +8,7 @@
   <div class="col-md-3">
     <%= bootstrap_form_tag url: :templates, method: "get", layout: :inline do |f| %>
         <%= f.text_field :query, skip_label: true, placeholder: "Search templates" %>
-        <%= f.submit :submit, name: nil%>
+        <%= f.submit 'Submit', name: nil%>
       <% end %>
   </div>
 </div>
