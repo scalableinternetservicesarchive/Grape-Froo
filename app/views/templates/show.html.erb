@@ -9,7 +9,7 @@
 </p>
 
 <p>
-  submitted <%= time_ago_in_words(@template.created_at) %> ago by <em><%= @template.user %></em>
+  submitted <%= time_ago_in_words(@template.created_at) %> ago by <%= link_to(@template.user, @template.user) %>
 </p>
 
 <%= link_to 'Edit', edit_template_path(@template) %> |

@@ -5,7 +5,7 @@
 </p>
 
 <p>
-  submitted <%= time_ago_in_words(@meme.created_at) %> ago by <em><%= @meme.user %></em>
+  submitted <%= time_ago_in_words(@meme.created_at) %> ago by <%= link_to(@meme.user, @meme.user) %>
 </p>
 
 <% if @meme.root_comments.present? %>
