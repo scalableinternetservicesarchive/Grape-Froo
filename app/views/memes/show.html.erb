@@ -1,28 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Url:</strong>
-  <%= @meme.image.url %>
+  <%= image_tag(@meme.image.url, :id => "meme", :data => { :memeid => @meme.id }) %>
 </p>
 
 <p>
-  <strong>Top caption:</strong>
-  <%= @meme.top_caption %>
-</p>
-
-<p>
-  <strong>Bottom caption:</strong>
-  <%= @meme.bottom_caption %>
-</p>
-
-<p>
-  <strong>Template:</strong>
-  <%= @meme.template %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @meme.user %>
+  submitted <%= time_ago_in_words(@meme.created_at) %> ago by <em><%= @meme.user %></em>
 </p>
 
 <% if @meme.root_comments.present? %>
