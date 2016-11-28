@@ -89,6 +89,11 @@ class MemesController < ApplicationController
     render json: ret
   end
 
+  def random
+    random_meme = Meme.offset(rand(Meme.count)).first
+    redirect_to random_meme
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_meme
