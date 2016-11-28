@@ -45,12 +45,10 @@
                                 "logo"), root_path, :class => "navbar-brand") %>
         </div>
         <div class="collapse navbar-collapse" id="nav-collapse">
-          <form class="navbar-form navbar-left">
-            <div class="form-group">
-              <input type="text" class="form-control" id="searchbar" placeholder="Search memes">
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-          </form>
+          <%= bootstrap_form_tag url: '/search', method: "get", layout: :inline do |f| %>
+              <%= f.text_field :query, skip_label: true, placeholder: "Search memes", id:"searchbar" %>
+              <%= f.submit 'Submit', name: nil%>
+            <% end %>
           <ul class="nav navbar-right navbar-nav">
             <% if user_signed_in? %>
               <li><span class="navbar-text">Signed in as <%= current_user.username %> <%= link_to("(Edit Profile)", edit_user_registration_path)%></span></li>

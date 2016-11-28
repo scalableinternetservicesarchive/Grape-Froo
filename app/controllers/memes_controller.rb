@@ -9,6 +9,20 @@ class MemesController < ApplicationController
     @memes = Meme.all
   end
 
+  # GET /search
+  def search
+    if params[:query].present?
+      condition = "%#{params[:query].downcase}%"
+      @memes = Meme.where("lower(top_caption) LIKE ? OR lower(bottom_caption) LIKE ?", condition, condition)
+      respond_to do |format|
+        format.html { }
+        format.js { @memes = @memes.limit(10) }
+      end
+    else
+      @memes = Meme.all
+    end
+  end
+
   # GET /memes/1
   # GET /memes/1.json
   def show
