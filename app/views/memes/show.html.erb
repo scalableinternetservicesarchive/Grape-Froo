@@ -15,7 +15,6 @@
   </p>
 <% end %>
 
-<%= link_to 'Edit', edit_meme_path(@meme) %> |
 <%= link_to 'Back', memes_path %>
 <% if user_signed_in? %>
   | <%= link_to 'Comment', new_comment_path(comment: { meme_id: @meme.id, user_id: current_user.id }) %>

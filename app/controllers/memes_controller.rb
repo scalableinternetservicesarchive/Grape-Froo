@@ -1,6 +1,6 @@
 require 'memeutil'
 class MemesController < ApplicationController
-  before_action :set_meme, only: [:show, :edit, :update, :destroy, :vote]
+  before_action :set_meme, only: [:show, :update, :destroy, :vote]
   before_action :authenticate_user!, except: [:index, :show]
 
   # GET /memes
@@ -17,11 +17,6 @@ class MemesController < ApplicationController
   # GET /memes/new
   def new
     @meme = Meme.new
-  end
-
-  # GET /memes/1/edit
-  def edit
-    authorize @meme
   end
 
   # POST /memes
