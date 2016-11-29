@@ -37,21 +37,6 @@ class MemesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /memes/1
-  # PATCH/PUT /memes/1.json
-  def update
-    authorize @meme
-    respond_to do |format|
-      if @meme.update(meme_params)
-        format.html { redirect_to @meme, notice: 'Meme was successfully updated.' }
-        format.json { render :show, status: :ok, location: @meme }
-      else
-        format.html { render :edit }
-        format.json { render json: @meme.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /memes/1
   # DELETE /memes/1.json
   def destroy
