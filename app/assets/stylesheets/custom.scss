@@ -43,8 +43,12 @@
   height: 150px !important;
 }
 
-#meme {
-  height: 500px !important;
+#meme-creation {
+  margin-bottom: 50px;
+}
+
+#image {
+  max-height: 500px;
 }
 
 // Search bar in main content panel (i.e. for templates)
@@ -170,4 +174,11 @@ hr {
 {
     bottom: 0;
     padding-bottom: 0;
+}
+
+.upvote-active {
+  color: #41be47;
+}
+.downvote-active {
+  color: red;
 }

@@ -5,37 +5,11 @@
     <h2 id="subheader">Recent Memes</h2>
   </div>
 </div>
-<hr />
-<div class="row">
-  <% @memes.each do |meme| %>
-    <div class="col-xs-6 col-sm-4 col-md-3 card">
-      <div class="thumbnail">
-        <%= link_to(image_tag(meme.image.url, :class => "meme-img", :data => { :memeid => meme.id }),
-               meme, :title => meme.top_caption) %>
-      </div>
 
-      <%= button_tag(type: 'button', class: ["btn", "btn-default", "up-vote-button"], data: { memeid: meme.id }) do
-          content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-up"]) 
-          end
-      %>
+<%= render "memes" %>
 
-      <%= button_tag(type: 'button', class: ["btn", "btn-default", "down-vote-button"], data: { memeid: meme.id }) do
-          content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-down"]) 
-          end
-      %>
-    </div>
-  <% end %>
-</div>
-<div class="row">
-  <div class="col-md-12">
-    <div class="text-center">
-      <%= will_paginate @memes, renderer: BootstrapPagination::Rails %>
-    </div>
-  </div>
-</div>
 <% content_for :footerjs do %>
   <script type="text/javascript">
-    $("#nav-recent").addClass("active");
+  $("#nav-recent").addClass("active");
   </script>
 <% end %>
-</div>

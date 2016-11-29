@@ -9,7 +9,10 @@ module Memeutil
       if template_img.starts_with?('//')
         template_img = 'http:' + template_img
       end
-      old_canvas = Magick::ImageList.new(template_img)
+      template_img.sub!(/^https/, 'http') # don't use https for speed
+      imgblob = open(template_img)
+      old_canvas = Magick::ImageList.new
+      old_canvas.from_blob(imgblob.read)
       new_canvas = Magick::ImageList.new
       image = old_canvas.first
 

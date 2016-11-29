@@ -1,29 +1,34 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Url:</strong>
-  <%= @meme.image.url %>
+  <%= image_tag(@meme.image.url, :id => "image", :class => "img-responsive", :data => { :memeid => @meme.id }) %>
+</p>
+  <%= button_tag(type: 'button', class: ["btn", "btn-default", "up-vote-button"], data: { memeid: @meme.id }) do
+      content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-up", (@user_vote.value == 1 ? "upvote-active" : "")])
+      end
+  %>
+  <span class="score"><%= @score %></span>
+  <%= button_tag(type: 'button', class: ["btn", "btn-default", "down-vote-button"], data: { memeid: @meme.id }) do
+      content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-down", (@user_vote.value == -1 ? "downvote-active" : "")])
+      end
+  %>
 </p>
 
 <p>
-  <strong>Top caption:</strong>
-  <%= @meme.top_caption %>
+  submitted <%= time_ago_in_words(@meme.created_at) %> ago by <%= link_to(@meme.user, @meme.user) %>
 </p>
 
-<p>
-  <strong>Bottom caption:</strong>
-  <%= @meme.bottom_caption %>
-</p>
+<% if @meme.root_comments.present? %>
+  <p>
+    <strong>Comments:</strong>
+    <%= render @meme.root_comments %>
+  </p>
+<% end %>
 
-<p>
-  <strong>Template:</strong>
-  <%= @meme.template %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @meme.user %>
-</p>
-
-<%= link_to 'Edit', edit_meme_path(@meme) %> |
-<%= link_to 'Back', memes_path %>
+<%= link_to 'Back', :back %>
+<% if user_signed_in? %>
+  | <%= link_to 'Comment', new_comment_path(comment: { meme_id: @meme.id, user_id: current_user.id }) %>
+  <% if current_user == @meme.user %>
+    | <%= link_to 'Delete', @meme, method: :delete, data: { confirm: "Are you sure?" }%>
+  <% end %>
+<% end %>

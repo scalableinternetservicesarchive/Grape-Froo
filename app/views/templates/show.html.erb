@@ -5,9 +5,15 @@
 </p>
 
 <p>
-  <strong>Url:</strong>
-  <%= @template.image.url %>
+  <%= image_tag(@template.image.url, :id => "image", :class => "img-responsive") %>
 </p>
 
+<p>
+  submitted <%= time_ago_in_words(@template.created_at) %> ago by <%= link_to(@template.user, @template.user) %>
+</p>
+
+<%= link_to 'Back', :back %> |
+<% if user_signed_in? and current_user == @template.user %>
 <%= link_to 'Edit', edit_template_path(@template) %> |
-<%= link_to 'Back', templates_path %>
+<%= link_to 'Delete', @template, method: :delete, data: { confirm: "Are you sure?" }%>
+<% end %>
