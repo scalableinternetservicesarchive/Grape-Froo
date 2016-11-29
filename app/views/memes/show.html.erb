@@ -3,6 +3,16 @@
 <p>
   <%= image_tag(@meme.image.url, :id => "image", :class => "img-responsive", :data => { :memeid => @meme.id }) %>
 </p>
+  <%= button_tag(type: 'button', class: ["btn", "btn-default", "up-vote-button"], data: { memeid: @meme.id }) do
+      content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-up", (@user_vote.value == 1 ? "upvote-active" : "")])
+      end
+  %>
+  <span class="score"><%= @score %></span>
+  <%= button_tag(type: 'button', class: ["btn", "btn-default", "down-vote-button"], data: { memeid: @meme.id }) do
+      content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-down", (@user_vote.value == -1 ? "downvote-active" : "")])
+      end
+  %>
+</p>
 
 <p>
   submitted <%= time_ago_in_words(@meme.created_at) %> ago by <%= link_to(@meme.user, @meme.user) %>
