@@ -21,12 +21,19 @@ class MemesController < ApplicationController
     if params[:query].present?
       condition = "%#{params[:query].downcase}%"
       @memes = Meme.where("lower(top_caption) LIKE ? OR lower(bottom_caption) LIKE ?", condition, condition)
+      @votes = Vote.where(meme: @memes.map{|m| m.id})
+      if user_signed_in?
+        @user_votes = @votes.where(user: current_user)
+      else
+        @user_votes = Vote.none
+      end
+      @votes = @votes.group_by(&:meme_id)
       respond_to do |format|
         format.html { }
         format.js { @memes = @memes.limit(10) }
       end
     else
-      @memes = Meme.all
+      redirect_to :root
     end
   end
 
