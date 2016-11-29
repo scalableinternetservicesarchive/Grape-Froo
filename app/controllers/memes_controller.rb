@@ -1,7 +1,7 @@
 require 'memeutil'
 class MemesController < ApplicationController
-  before_action :set_meme, only: [:show, :edit, :update, :destroy, :vote]
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_meme, only: [:show, :update, :destroy, :vote]
+  before_action :authenticate_user!, except: [:index, :show, :random]
 
   # GET /memes
   # GET /memes.json
@@ -33,11 +33,6 @@ class MemesController < ApplicationController
     @meme = Meme.new
   end
 
-  # GET /memes/1/edit
-  def edit
-    authorize @meme
-  end
-
   # POST /memes
   # POST /memes.json
   def create
@@ -56,28 +51,13 @@ class MemesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /memes/1
-  # PATCH/PUT /memes/1.json
-  def update
-    authorize @meme
-    respond_to do |format|
-      if @meme.update(meme_params)
-        format.html { redirect_to @meme, notice: 'Meme was successfully updated.' }
-        format.json { render :show, status: :ok, location: @meme }
-      else
-        format.html { render :edit }
-        format.json { render json: @meme.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /memes/1
   # DELETE /memes/1.json
   def destroy
     authorize @meme
     @meme.destroy
     respond_to do |format|
-      format.html { redirect_to memes_url, notice: 'Meme was successfully destroyed.' }
+      format.html { redirect_to memes_url, notice: 'Meme was successfully deleted.' }
       format.json { head :no_content }
     end
   end
@@ -101,6 +81,15 @@ class MemesController < ApplicationController
       ret = value
     end
     render json: ret
+  end
+
+  def random
+    if Meme.count == 0
+      redirect_to root_url
+    else
+      random_meme = Meme.offset(rand(Meme.count)).first
+      redirect_to random_meme
+    end
   end
 
   private

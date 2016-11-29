@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :comments
-  resources :memes
+  resources :memes, :except => [:edit, :update]
   devise_for :users
   resources :users, :only => [:show]
   resources :templates
@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   root 'memes#index'
   get 'search' => 'memes#search'
   post 'memes/:id/vote' => 'memes#vote', :as => 'vote'
+  get 'random' => 'memes#random'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

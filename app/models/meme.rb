@@ -1,7 +1,7 @@
 class Meme < ApplicationRecord
   belongs_to :template
   belongs_to :user
-  has_many :votes
+  has_many :votes, dependent: :destroy
   has_many :comments, dependent: :destroy
 
   has_attached_file :image

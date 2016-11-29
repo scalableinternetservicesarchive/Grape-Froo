@@ -7,3 +7,9 @@
 </div>
 
 <%= render "memes" %>
+
+<% content_for :footerjs do %>
+  <script type="text/javascript">
+  $("#nav-recent").addClass("active");
+  </script>
+<% end %>

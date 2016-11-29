@@ -72,7 +72,7 @@
             <li role="presentation" id="nav-recent"><%= link_to("Recent", root_path) %></li>
             <li role="presentation" id="nav-popular"><a href="#">Popular</a></li>
             <li role="presentation" id="nav-templates"><%= link_to("Templates", templates_path) %></li>
-            <li role="presentation"><a href="#">Random</a></li>
+            <li role="presentation" id="nav-random"><%= link_to("Random", random_path) %></li>
             <% if user_signed_in? %>
             <li role="presentation" id="nav-profile"><%= link_to("Your Profile", current_user) %></li>
             <% end %>
