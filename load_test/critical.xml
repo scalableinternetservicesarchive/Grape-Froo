@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE tsung SYSTEM "/home/ec2-user/opt/tsung-1.5.0/share/tsung/tsung-1.0.dtd">
-<tsung loglevel="notice" version="1.0">
+<tsung loglevel="notice" version="1.0" dumptraffic="true">
 
   <!-- Client side setup -->
   <clients>
@@ -9,7 +9,7 @@
 
   <!-- Server side setup -->
   <servers>
-    <server host="35.163.241.7" port="80" type="tcp"></server>
+    <server host="35.162.124.130" port="80" type="tcp"></server>
   </servers>
 
   <load>
@@ -40,12 +40,14 @@
     <session name="http-example" probability="100" type="ts_http">
       <!-- Home Page -->
       <request>
+        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">200 OK</match>
         <http url='/' version='1.1' method='GET'></http>
       </request>
       <thinktime value="2" random="true"></thinktime>
 
       <!-- Sign Up Page -->
       <request>
+        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">200 OK</match>
         <http url='/users/sign_up' version='1.1' method='GET'></http>
       </request>
       <thinktime value="2" random="true"></thinktime>
@@ -56,6 +58,8 @@
 
       <!-- Create account -->
       <request subst="true">
+        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">302 Found</match>
+        <dyn_variable name="redirect" re="[Ll]ocation: (http://.*)\r"/>
         <http
           url='/users'
           version='1.1'
@@ -63,17 +67,30 @@
           contents='utf8=%E2%9C%93&amp;user%5Busername%5D=tsungtest%%_random_user_number%%&amp;user%5Bemail%5D=tsungtest%%_random_user_number%%@gmail.com&amp;user%5Bpassword%5D=tsungtest%%_random_user_number%%&amp;user%5Bpassword_confirmation%5D=tsungtest%%_random_user_number%%&amp;commit=Sign+up'>
         </http>
       </request>
-
       <thinktime value="2" random="true"></thinktime>
+
+      <!-- Grab user ID -->
+      <request subst="true">
+        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">200 OK</match>
+        <dyn_variable name="created_user_id" re="/users/(\d+)"/>
+        <http
+          url='%%_redirect%%'
+          version='1.1'
+          method='GET'
+          >
+        </http>
+      </request>
 
       <!-- New Meme Page -->
       <request>
+        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">200 OK</match>
         <http url='/memes/new' version='1.1' method='GET'></http>
       </request>
       <thinktime value="2" random="true"></thinktime>
 
       <!-- Template query -->
       <request>
+        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">200 OK</match>
         <http 
           url='/templates' 
           version='1.1' 
@@ -85,11 +102,74 @@
 
       <!-- Create Meme -->
       <request subst="true">
+        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">302 Found</match>
+        <dyn_variable name="created_meme_url" re="[Ll]ocation: (http://.*)\r"/>
+        <dyn_variable name="created_meme_id" re="[Ll]ocation: http://.*/memes/(.*)\r"/>
         <http
           url='/memes'
           version='1.1'
           method='POST'
           contents='utf8=%E2%9C%93&amp;meme%5Btop_caption%5D=Not+a+real+user&amp;meme%5Bbottom_caption%5D=tsunguser+%%_random_user_number%%&amp;meme%5Btemplate_id%5D=1'
+          >
+        </http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+
+      <!-- Create Meme Comment -->
+      <request subst="true">
+        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">302 Found</match>
+        <http
+          url='/comments'
+          version='1.1'
+          method='POST'
+          contents='utf8=%E2%9C%93&amp;comment%5Bmeme_id%5D=%%_created_meme_id%%&amp;comment%5Buser_id%5D=%%_created_user_id%%&amp;comment%5Bmessage%5D=test+%%_random_user_number%%&amp;commit=Create+Comment'
+          >
+        </http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+
+      <!-- Upvote Meme -->
+      <request subst="true">
+        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">200 OK</match>
+        <http
+          url='%%_created_meme_url%%/vote'
+          version='1.1'
+          method='POST'
+          contents='value=1'
+          >
+        </http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+
+      <!-- Downvote Meme -->
+      <request subst="true">
+        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">200 OK</match>
+        <http
+          url='%%_created_meme_url%%/vote'
+          version='1.1'
+          method='POST'
+          contents='value=-1'
+          >
+        </http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+
+      <!-- Uncomment the following to debug print your dynamic variables  -->
+
+      <setdynvars sourcetype="eval" code="fun( {Pid, DynVars} ) ->
+        io:format([126, $p, 126, $n, 126, $n], [DynVars]),
+        ok end.">
+        <var name="dump" />
+      </setdynvars>
+
+
+      <!-- Delete Meme -->
+      <request subst="true">
+        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">302 Found</match>
+        <http
+          url='%%_created_meme_url%%'
+          version='1.1'
+          method='DELETE'
           >
         </http>
       </request>
