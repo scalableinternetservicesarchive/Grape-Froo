@@ -3,6 +3,7 @@ before_action :set_user, only: [:show, :memes, :templates]
 
 
   def show
+    render :memes
   end
 
   def memes
