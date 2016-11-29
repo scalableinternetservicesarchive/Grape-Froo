@@ -13,15 +13,14 @@
         <%= link_to(image_tag(meme.image.url, :class => "meme-img", :data => { :memeid => meme.id }),
                meme, :title => meme.top_caption) %>
       </div>
-
+      <% user_vote = @user_votes.find{ |vote| vote.meme_id == meme.id } || Vote.new(value: 0) %>
       <%= button_tag(type: 'button', class: ["btn", "btn-default", "up-vote-button"], data: { memeid: meme.id }) do
-          content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-up"])
+          content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-up", (user_vote.value == 1 ? "upvote-active" : "")])
           end
       %>
-      <% v = @votes.find{ |vote| vote.meme_id == meme.id } %>
-      <%= v ? v.value : 0 %>
+      <span class="score"><%= (@votes[meme.id] || []).reduce(0) {|sum, vote| sum + vote.value } %></span>
       <%= button_tag(type: 'button', class: ["btn", "btn-default", "down-vote-button"], data: { memeid: meme.id }) do
-          content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-down"])
+          content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-down", (user_vote.value == -1 ? "downvote-active" : "")])
           end
       %>
     </div>
