@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :comments
-  resources :memes, :except => [:edit]
+  resources :memes, :except => [:edit, :update]
   devise_for :users
   resources :users, :only => [:show]
   resources :templates
