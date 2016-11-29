@@ -1,29 +1,24 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Url:</strong>
-  <%= @meme.image.url %>
+  <%= image_tag(@meme.image.url, :id => "image", :class => "img-responsive", :data => { :memeid => @meme.id }) %>
 </p>
 
 <p>
-  <strong>Top caption:</strong>
-  <%= @meme.top_caption %>
+  submitted <%= time_ago_in_words(@meme.created_at) %> ago by <%= link_to(@meme.user, @meme.user) %>
 </p>
 
-<p>
-  <strong>Bottom caption:</strong>
-  <%= @meme.bottom_caption %>
-</p>
+<% if @meme.root_comments.present? %>
+  <p>
+    <strong>Comments:</strong>
+    <%= render @meme.root_comments %>
+  </p>
+<% end %>
 
-<p>
-  <strong>Template:</strong>
-  <%= @meme.template %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @meme.user %>
-</p>
-
-<%= link_to 'Edit', edit_meme_path(@meme) %> |
 <%= link_to 'Back', memes_path %>
+<% if user_signed_in? %>
+  | <%= link_to 'Comment', new_comment_path(comment: { meme_id: @meme.id, user_id: current_user.id }) %>
+  <% if current_user == @meme.user %>
+    | <%= link_to 'Delete', @meme, method: :delete %>
+  <% end %>
+<% end %>
