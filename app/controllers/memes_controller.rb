@@ -58,7 +58,7 @@ class MemesController < ApplicationController
     authorize @meme
     @meme.destroy
     respond_to do |format|
-      format.html { redirect_to memes_url, notice: 'Meme was successfully destroyed.' }
+      format.html { redirect_to memes_url, notice: 'Meme was successfully deleted.' }
       format.json { head :no_content }
     end
   end
