@@ -6,7 +6,7 @@ class MemesController < ApplicationController
   # GET /memes
   # GET /memes.json
   def index
-    @memes = Meme.all.includes(:user)
+    @memes = Meme.all.order('memes.created_at DESC').includes(:user)
     @votes = Vote.where(meme: @memes.map{|m| m.id}, user: current_user)
   end
 
