@@ -8,16 +8,15 @@ var vote_ready = function() {
     // If val = 1, set upvote color, clear downvote color
     // if val = 0, clear both colors
     // if val = -1, set downvote color, clear upvote color,
-
     if (val == 1) {
-      up_arrow.css("color", "#41be47");
-      down_arrow.css("color", "");
+      up_arrow.addClass('upvote-active');
+      down_arrow.removeClass('downvote-active');
     } else if (val == 0) {
-      up_arrow.css("color", "");
-      down_arrow.css("color", "");
+      up_arrow.removeClass('upvote-active');
+      down_arrow.removeClass('downvote-active');
     } else { // val == -1
-      up_arrow.css("color", "");
-      down_arrow.css("color", "red");
+      up_arrow.removeClass('upvote-active');
+      down_arrow.addClass('downvote-active');
     }
   };
 
@@ -34,7 +33,8 @@ var vote_ready = function() {
       url: vote_url,
       data: {'value': value},
       success: function(result) {
-        color_arrows(result, up_arrow, down_arrow);
+        color_arrows(result["result"], up_arrow, down_arrow);
+        down_arrow.parent().prev().text(result["score"]);
       }
     })
   });

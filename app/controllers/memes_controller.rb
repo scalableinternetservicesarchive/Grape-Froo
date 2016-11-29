@@ -1,17 +1,50 @@
 require 'memeutil'
 class MemesController < ApplicationController
   before_action :set_meme, only: [:show, :update, :destroy, :vote]
-  before_action :authenticate_user!, except: [:index, :show, :random]
+  before_action :authenticate_user!, except: [:index, :show, :random, :search]
 
   # GET /memes
   # GET /memes.json
   def index
-    @memes = Meme.all
+    @memes = Meme.all.order('memes.created_at DESC')
+    @votes = Vote.where(meme: @memes.map{|m| m.id})
+    if user_signed_in?
+      @user_votes = @votes.where(user: current_user)
+    else
+      @user_votes = Vote.none
+    end
+    @votes = @votes.group_by(&:meme_id)
+  end
+
+  # GET /search
+  def search
+    if params[:query].present?
+      condition = "%#{params[:query].downcase}%"
+      @memes = Meme.where("lower(top_caption) LIKE ? OR lower(bottom_caption) LIKE ?", condition, condition)
+      @votes = Vote.where(meme: @memes.map{|m| m.id})
+      if user_signed_in?
+        @user_votes = @votes.where(user: current_user)
+      else
+        @user_votes = Vote.none
+      end
+      @votes = @votes.group_by(&:meme_id)
+      respond_to do |format|
+        format.html { }
+        format.js { @memes = @memes.limit(10) }
+      end
+    else
+      redirect_to :root
+    end
   end
 
   # GET /memes/1
   # GET /memes/1.json
   def show
+    if user_signed_in?
+      @user_vote = Vote.find_by(user: current_user, meme: @meme)
+    end
+    @user_vote ||= Vote.new(value: 0)
+    @score = Vote.where(meme: @meme).sum(:value)
   end
 
   # GET /memes/new
@@ -32,21 +65,6 @@ class MemesController < ApplicationController
         format.json { render :show, status: :created, location: @meme }
       else
         format.html { render :new }
-        format.json { render json: @meme.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /memes/1
-  # PATCH/PUT /memes/1.json
-  def update
-    authorize @meme
-    respond_to do |format|
-      if @meme.update(meme_params)
-        format.html { redirect_to @meme, notice: 'Meme was successfully updated.' }
-        format.json { render :show, status: :ok, location: @meme }
-      else
-        format.html { render :edit }
         format.json { render json: @meme.errors, status: :unprocessable_entity }
       end
     end
@@ -81,7 +99,7 @@ class MemesController < ApplicationController
       Vote.create(meme: @meme, user: current_user, value: value)
       ret = value
     end
-    render json: ret
+    render json: { :result => ret, :score => Vote.where(meme: @meme).sum(:value) }
   end
 
   def random
