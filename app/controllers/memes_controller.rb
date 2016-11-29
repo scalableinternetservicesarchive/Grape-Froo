@@ -1,7 +1,7 @@
 require 'memeutil'
 class MemesController < ApplicationController
   before_action :set_meme, only: [:show, :update, :destroy, :vote]
-  before_action :authenticate_user!, except: [:index, :show, :random]
+  before_action :authenticate_user!, except: [:index, :show, :random, :search]
 
   # GET /memes
   # GET /memes.json
@@ -14,6 +14,20 @@ class MemesController < ApplicationController
       @user_votes = Vote.none
     end
     @votes = @votes.group_by(&:meme_id)
+  end
+
+  # GET /search
+  def search
+    if params[:query].present?
+      condition = "%#{params[:query].downcase}%"
+      @memes = Meme.where("lower(top_caption) LIKE ? OR lower(bottom_caption) LIKE ?", condition, condition)
+      respond_to do |format|
+        format.html { }
+        format.js { @memes = @memes.limit(10) }
+      end
+    else
+      @memes = Meme.all
+    end
   end
 
   # GET /memes/1
