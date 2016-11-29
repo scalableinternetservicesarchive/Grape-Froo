@@ -33,7 +33,8 @@ var vote_ready = function() {
       url: vote_url,
       data: {'value': value},
       success: function(result) {
-        color_arrows(result, up_arrow, down_arrow);
+        color_arrows(result["result"], up_arrow, down_arrow);
+        down_arrow.parent().prev().text(result["score"]);
       }
     })
   });

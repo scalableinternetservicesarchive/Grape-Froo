@@ -82,7 +82,7 @@ class MemesController < ApplicationController
       Vote.create(meme: @meme, user: current_user, value: value)
       ret = value
     end
-    render json: ret
+    render json: { :result => ret, :score => Vote.where(meme: @meme).sum(:value) }
   end
 
   def random
