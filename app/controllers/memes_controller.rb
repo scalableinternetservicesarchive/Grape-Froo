@@ -85,8 +85,12 @@ class MemesController < ApplicationController
   end
 
   def random
-    random_meme = Meme.offset(rand(Meme.count)).first
-    redirect_to random_meme
+    if Meme.count == 0
+      redirect_to root_url
+    else
+      random_meme = Meme.offset(rand(Meme.count)).first
+      redirect_to random_meme
+    end
   end
 
   private

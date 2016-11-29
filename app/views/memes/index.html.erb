@@ -25,6 +25,16 @@
       %>
     </div>
   <% end %>
+  <% if @memes.blank? %>
+    <div class="col-md-12">
+      <div class="alert alert-info">No memes here. Go create one!</div>
+    </div>
+  <% end %>
 </div>
 
 </div>
+<% content_for :footerjs do %>
+  <script type="text/javascript">
+  $("#nav-recent").addClass("active");
+  </script>
+<% end %>
