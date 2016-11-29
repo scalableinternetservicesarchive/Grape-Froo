@@ -15,12 +15,13 @@
       </div>
 
       <%= button_tag(type: 'button', class: ["btn", "btn-default", "up-vote-button"], data: { memeid: meme.id }) do
-          content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-up"]) 
+          content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-up"])
           end
       %>
-
+      <% v = @votes.find{ |vote| vote.meme_id == meme.id } %>
+      <%= v ? v.value : 0 %>
       <%= button_tag(type: 'button', class: ["btn", "btn-default", "down-vote-button"], data: { memeid: meme.id }) do
-          content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-down"]) 
+          content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-down"])
           end
       %>
     </div>
