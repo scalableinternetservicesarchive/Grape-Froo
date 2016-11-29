@@ -1,7 +1,7 @@
 require 'memeutil'
 class MemesController < ApplicationController
   before_action :set_meme, only: [:show, :edit, :update, :destroy, :vote]
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show, :random]
 
   # GET /memes
   # GET /memes.json
