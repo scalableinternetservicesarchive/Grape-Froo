@@ -19,6 +19,11 @@ class MemesController < ApplicationController
   # GET /memes/1
   # GET /memes/1.json
   def show
+    if user_signed_in?
+      @user_vote = Vote.find_by(user: current_user, meme: @meme)
+    end
+    @user_vote ||= Vote.new(value: 0)
+    @score = Vote.where(meme: @meme).sum(:value)
   end
 
   # GET /memes/new
