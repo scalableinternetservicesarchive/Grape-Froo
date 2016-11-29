@@ -7,7 +7,7 @@
       content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-up", (@user_vote.value == 1 ? "upvote-active" : "")])
       end
   %>
-  <span class="score"><%= @score %></span>
+  <span class="score">&nbsp;<%= @score %>&nbsp;</span>
   <%= button_tag(type: 'button', class: ["btn", "btn-default", "down-vote-button"], data: { memeid: @meme.id }) do
       content_tag(:span, "", class: ["glyphicon", "glyphicon-arrow-down", (@user_vote.value == -1 ? "downvote-active" : "")])
       end
