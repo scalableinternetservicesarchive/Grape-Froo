@@ -22,6 +22,11 @@
     </div>
     </div>
   <% end %>
+  <% if @templates.blank? %>
+    <div class="col-md-12">
+      <div class="alert alert-info">No templates yet. Upload one!</div>
+    </div>
+  <% end %>
 </div>
 <% content_for :footerjs do %>
   <script type="text/javascript">
