@@ -18,6 +18,11 @@ Template.create!("name" => "aliens", "image" => URI.escape("http://i.imgur.com/7
 Template.create!("name" => "first world problems", "image" => URI.escape("http://i.imgur.com/nhl48TV.jpg"), :user => user, :id => 8)
 Template.create!("name" => "classy", "image" => URI.escape("https://media.giphy.com/media/HDYjeDYrZBU5y/giphy.gif"), :user => user, :id => 9)
 Template.create!("name" => "who does that", "image" => URI.escape("https://media.giphy.com/media/3oriO7RNRqh47AempG/source.gif"), :user => user, :id => 10)
+250.times do |i|
+	m = Meme.new("top_caption" => "test1", "bottom_caption" => "test2", :template => t1, :user => user, :id => i)
+	m.image = Memeutil.memeify(t1.image.url, m.top_caption, m.bottom_caption)
+	m.save
+end
 rescue Exception
 	puts "Seeds aborted due to duplicate"
 end
