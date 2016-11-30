@@ -9,7 +9,7 @@
 
   <!-- Server side setup -->
   <servers>
-    <server host="35.162.124.130" port="80" type="tcp"></server>
+    <server host="35.164.210.101" port="80" type="tcp"></server>
   </servers>
 
   <load>
@@ -22,9 +22,29 @@
     <arrivalphase phase="3" duration="30" unit="second">
       <users arrivalrate="4" unit="second"></users>
     </arrivalphase>
-    <arrivalphase phase="4" duration="30" unit="second">
-      <users arrivalrate="8" unit="second"></users>
-    </arrivalphase>
+   <arrivalphase phase="4" duration="30" unit="second">
+     <users arrivalrate="8" unit="second"></users>
+   </arrivalphase>
+<!--
+   <arrivalphase phase="5" duration="30" unit="second">
+     <users arrivalrate="16" unit="second"></users>
+   </arrivalphase>
+   <arrivalphase phase="6" duration="30" unit="second">
+     <users arrivalrate="32" unit="second"></users>
+   </arrivalphase>
+   <arrivalphase phase="7" duration="30" unit="second">
+     <users arrivalrate="64" unit="second"></users>
+   </arrivalphase>
+   <arrivalphase phase="8" duration="30" unit="second">
+     <users arrivalrate="128" unit="second"></users>
+   </arrivalphase>
+   <arrivalphase phase="9" duration="30" unit="second">
+     <users arrivalrate="256" unit="second"></users>
+   </arrivalphase>
+   <arrivalphase phase="10" duration="30" unit="second">
+     <users arrivalrate="512" unit="second"></users>
+   </arrivalphase>
+-->
   </load>
 
   <options>
@@ -40,14 +60,12 @@
     <session name="http-example" probability="100" type="ts_http">
       <!-- Home Page -->
       <request>
-        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">200 OK</match>
         <http url='/' version='1.1' method='GET'></http>
       </request>
       <thinktime value="2" random="true"></thinktime>
 
       <!-- Sign Up Page -->
       <request>
-        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">200 OK</match>
         <http url='/users/sign_up' version='1.1' method='GET'></http>
       </request>
       <thinktime value="2" random="true"></thinktime>
@@ -58,7 +76,6 @@
 
       <!-- Create account -->
       <request subst="true">
-        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">302 Found</match>
         <dyn_variable name="redirect" re="[Ll]ocation: (http://.*)\r"/>
         <http
           url='/users'
@@ -71,7 +88,6 @@
 
       <!-- Grab user ID -->
       <request subst="true">
-        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">200 OK</match>
         <dyn_variable name="created_user_id" re="/users/(\d+)"/>
         <http
           url='%%_redirect%%'
@@ -83,14 +99,12 @@
 
       <!-- New Meme Page -->
       <request>
-        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">200 OK</match>
         <http url='/memes/new' version='1.1' method='GET'></http>
       </request>
       <thinktime value="2" random="true"></thinktime>
 
       <!-- Template query -->
       <request>
-        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">200 OK</match>
         <http 
           url='/templates' 
           version='1.1' 
@@ -102,7 +116,6 @@
 
       <!-- Create Meme -->
       <request subst="true">
-        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">302 Found</match>
         <dyn_variable name="created_meme_url" re="[Ll]ocation: (http://.*)\r"/>
         <dyn_variable name="created_meme_id" re="[Ll]ocation: http://.*/memes/(.*)\r"/>
         <http
@@ -115,9 +128,20 @@
       </request>
       <thinktime value="2" random="true"></thinktime>
 
+      <!-- Home Page -->
+      <request>
+        <http url='/' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+
+      <!-- Created Meme Page -->
+      <request>
+        <http url='%%_created_meme_url%%' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+
       <!-- Create Meme Comment -->
       <request subst="true">
-        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">302 Found</match>
         <http
           url='/comments'
           version='1.1'
@@ -128,9 +152,14 @@
       </request>
       <thinktime value="2" random="true"></thinktime>
 
+      <!-- Created Meme Page -->
+      <request>
+        <http url='%%_created_meme_url%%' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+
       <!-- Upvote Meme -->
       <request subst="true">
-        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">200 OK</match>
         <http
           url='%%_created_meme_url%%/vote'
           version='1.1'
@@ -141,16 +170,15 @@
       </request>
       <thinktime value="2" random="true"></thinktime>
 
-      <!-- Downvote Meme -->
-      <request subst="true">
-        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">200 OK</match>
-        <http
-          url='%%_created_meme_url%%/vote'
-          version='1.1'
-          method='POST'
-          contents='value=-1'
-          >
-        </http>
+      <!-- Home Page -->
+      <request>
+        <http url='/' version='1.1' method='GET'></http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+
+      <!-- Created Meme Page -->
+      <request>
+        <http url='%%_created_meme_url%%' version='1.1' method='GET'></http>
       </request>
       <thinktime value="2" random="true"></thinktime>
 
@@ -165,7 +193,6 @@
 
       <!-- Delete Meme -->
       <request subst="true">
-        <match do="loop" sleep_loop="5" max_loop="10" when="nomatch">302 Found</match>
         <http
           url='%%_created_meme_url%%'
           version='1.1'

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE tsung SYSTEM "/home/ec2-user/opt/tsung-1.5.0/share/tsung/tsung-1.0.dtd">
-<tsung loglevel="notice" version="1.0">
+<tsung loglevel="notice" version="1.0" dumptraffic="true">
 
   <!-- Client side setup -->
   <clients>
@@ -9,22 +9,12 @@
 
   <!-- Server side setup -->
   <servers>
-    <server host="www.google.com" port="80" type="tcp"></server>
+    <server host="35.162.56.100" port="80" type="tcp"></server>
   </servers>
 
-
   <load>
-    <arrivalphase phase="1" duration="10" unit="second">
+    <arrivalphase phase="1" duration="30" unit="second">
       <users arrivalrate="1" unit="second"></users>
-    </arrivalphase>
-    <arrivalphase phase="2" duration="10" unit="second">
-      <users arrivalrate="2" unit="second"></users>
-    </arrivalphase>
-    <arrivalphase phase="3" duration="10" unit="second">
-      <users arrivalrate="4" unit="second"></users>
-    </arrivalphase>
-    <arrivalphase phase="4" duration="10" unit="second">
-      <users arrivalrate="8" unit="second"></users>
     </arrivalphase>
   </load>
 
@@ -43,43 +33,128 @@
       <request>
         <http url='/' version='1.1' method='GET'></http>
       </request>
-      <thinktime vale="2" random="true"></thinktime>
+      <thinktime value="2" random="true"></thinktime>
 
       <!-- Sign Up Page -->
       <request>
         <http url='/users/sign_up' version='1.1' method='GET'></http>
       </request>
-      <thinktime vale="2" random="true"></thinktime>
+      <thinktime value="2" random="true"></thinktime>
 
       <setdynvars sourcetype="random_number" start="1000" end="9999999">
         <var name="random_user_number" />
       </setdynvars>
 
+      <!-- Create account -->
       <request subst="true">
+        <dyn_variable name="redirect" re="[Ll]ocation: (http://.*)\r"/>
         <http
           url='/users'
           version='1.1'
-          metod='POST'
-          contents='utf8=%E2%9C%93&amp;user%5Busername%5D=tsungtest&user%5Bemail%5D=tsungtest%40gmail.com&user%5Bpassword%5D=tsungtest&user%5Bpassword_confirmation%5D=tsungtest&commit=Sign+up'>
+          method='POST'
+          contents='utf8=%E2%9C%93&amp;user%5Busername%5D=tsungtest%%_random_user_number%%&amp;user%5Bemail%5D=tsungtest%%_random_user_number%%@gmail.com&amp;user%5Bpassword%5D=tsungtest%%_random_user_number%%&amp;user%5Bpassword_confirmation%5D=tsungtest%%_random_user_number%%&amp;commit=Sign+up'>
+        </http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+
+      <!-- Grab user ID -->
+      <request subst="true">
+        <dyn_variable name="created_user_id" re="/users/(\d+)"/>
+        <http
+          url='%%_redirect%%'
+          version='1.1'
+          method='GET'
+          >
         </http>
       </request>
 
-      <!-- Sign In Page -->
+      <!-- New Meme Page -->
       <request>
-        <http url='/users/sign_in' version='1.1' method='GET'></http>
+        <http url='/memes/new' version='1.1' method='GET'></http>
       </request>
-      <thinktime vale="2" random="true"></thinktime>
+      <thinktime value="2" random="true"></thinktime>
 
+      <!-- Template query -->
+      <request>
+        <http 
+          url='/templates' 
+          version='1.1' 
+          method='GET'
+          contents='query=bear'>
+        </http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+
+      <!-- Create Meme -->
+      <request subst="true">
+        <dyn_variable name="created_meme_url" re="[Ll]ocation: (http://.*)\r"/>
+        <dyn_variable name="created_meme_id" re="[Ll]ocation: http://.*/memes/(.*)\r"/>
+        <http
+          url='/memes'
+          version='1.1'
+          method='POST'
+          contents='utf8=%E2%9C%93&amp;meme%5Btop_caption%5D=Not+a+real+user&amp;meme%5Bbottom_caption%5D=tsunguser+%%_random_user_number%%&amp;meme%5Btemplate_id%5D=1'
+          >
+        </http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+
+      <!-- Create Meme Comment -->
       <request subst="true">
         <http
-          url='/users/sign_in'
+          url='/comments'
           version='1.1'
-          metod='POST'
-          contents='utf8=%E2%9C%93&authenticity_token=IhqysrDecFglr3pwWTS5gDR908kE%2FCSV71PlGkUDZ8EBxFeypR%2B4AK%2B5DJYf8AzZHNb7pJgAmMDEq4SIyssq%2Bg%3D%3D&user%5Blogin%5D=tsungtest&user%5Bpassword%5D=tsungtest&user%5Bremember_me%5D=0&commit=Log+in'>
+          method='POST'
+          contents='utf8=%E2%9C%93&amp;comment%5Bmeme_id%5D=%%_created_meme_id%%&amp;comment%5Buser_id%5D=%%_created_user_id%%&amp;comment%5Bmessage%5D=test+%%_random_user_number%%&amp;commit=Create+Comment'
+          >
         </http>
       </request>
+      <thinktime value="2" random="true"></thinktime>
+
+      <!-- Upvote Meme -->
+      <request subst="true">
+        <http
+          url='%%_created_meme_url%%/vote'
+          version='1.1'
+          method='POST'
+          contents='value=1'
+          >
+        </http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+
+      <!-- Downvote Meme -->
+      <request subst="true">
+        <http
+          url='%%_created_meme_url%%/vote'
+          version='1.1'
+          method='POST'
+          contents='value=-1'
+          >
+        </http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+
+      <!-- Uncomment the following to debug print your dynamic variables  -->
+
+      <setdynvars sourcetype="eval" code="fun( {Pid, DynVars} ) ->
+        io:format([126, $p, 126, $n, 126, $n], [DynVars]),
+        ok end.">
+        <var name="dump" />
+      </setdynvars>
 
 
+      <!-- Delete Meme -->
+      <request subst="true">
+        <http
+          url='%%_created_meme_url%%'
+          version='1.1'
+          method='DELETE'
+          >
+        </http>
+      </request>
+      <thinktime value="2" random="true"></thinktime>
+      
     </session>
   </sessions>
 </tsung>
