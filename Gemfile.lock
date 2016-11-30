@@ -245,8 +245,6 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (~> 0.3.0)
-    possessive (1.0.1)
-    puma (3.6.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
     rack (2.0.1)
@@ -350,8 +348,11 @@ DEPENDENCIES
   json
   listen (~> 3.0.5)
   paperclip
+<<<<<<< HEAD
   possessive
   puma (~> 3.0)
+=======
+>>>>>>> master
   pundit
   rails (~> 5.0.0, >= 5.0.0.1)
   rmagick
