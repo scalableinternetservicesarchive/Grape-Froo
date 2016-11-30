@@ -9,7 +9,7 @@ class MemesController < ApplicationController
     @memes = Meme.all.order('memes.created_at DESC')
     @votes = Vote.where(meme: @memes.map{|m| m.id})
     if user_signed_in?
-      @user_votes = @votes.where(user: current_user)
+      @user_votes = @votes.where(user: current_user, meme: @memes.map{|m| m.id})
     else
       @user_votes = Vote.none
     end
@@ -23,7 +23,7 @@ class MemesController < ApplicationController
       @memes = Meme.where("lower(top_caption) LIKE ? OR lower(bottom_caption) LIKE ?", condition, condition)
       @votes = Vote.where(meme: @memes.map{|m| m.id})
       if user_signed_in?
-        @user_votes = @votes.where(user: current_user)
+        @user_votes = @votes.where(user: current_user, meme: @memes.map{|m| m.id})
       else
         @user_votes = Vote.none
       end
