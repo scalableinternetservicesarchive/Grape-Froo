@@ -16,6 +16,19 @@ class MemesController < ApplicationController
     @votes = @votes.group_by(&:meme_id)
   end
 
+  def popular
+    @memes = Meme.select("*, (SELECT COALESCE(SUM(votes.value),0) FROM votes
+                         WHERE votes.meme_id = memes.id) AS score")
+                 .order("score DESC, memes.created_at DESC")
+    @votes = Vote.where(meme: @memes.map{|m| m.id})
+    if user_signed_in?
+      @user_votes = @votes.where(user: current_user)
+    else
+      @user_votes = Vote.none
+    end
+    @votes = @votes.group_by(&:meme_id)
+  end
+
   # GET /search
   def search
     if params[:query].present?

@@ -1,0 +1,15 @@
+<% provide(:title, "Popular Memes") %>
+
+<div class="row">
+  <div class="col-md-12">
+    <h2 id="subheader">Popular Memes</h2>
+  </div>
+</div>
+
+<%= render "memes" %>
+
+<% content_for :footerjs do %>
+  <script type="text/javascript">
+  $("#nav-popular").addClass("active");
+  </script>
+<% end %>
