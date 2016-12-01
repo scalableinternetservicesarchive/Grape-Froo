@@ -103,7 +103,7 @@ class MemesController < ApplicationController
     ret = 0
     if vote.present?
       if vote.value == value
-        vote.delete
+        vote.destroy
       else
         vote.update(value: value)
         ret = value
