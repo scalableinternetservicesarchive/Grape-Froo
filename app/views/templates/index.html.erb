@@ -14,6 +14,7 @@
 </div>
 <hr />
 <div class="row">
+  <% cache @templates do %>
   <% @templates.each do |template| %>
     <div class="col-xs-6 col-sm-4 col-md-3 card">
       <div class="thumbnail">
@@ -26,6 +27,7 @@
     <div class="col-md-12">
       <div class="alert alert-info">No templates yet. Upload one!</div>
     </div>
+  <% end %>
   <% end %>
 </div>
 <% content_for :footerjs do %>

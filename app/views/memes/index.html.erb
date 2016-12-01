@@ -6,7 +6,9 @@
   </div>
 </div>
 
-<%= render "memes" %>
+<% cache [current_user, @memes] do %>
+<%= render partial: "memes" %>
+<% end %>
 
 <% content_for :footerjs do %>
   <script type="text/javascript">

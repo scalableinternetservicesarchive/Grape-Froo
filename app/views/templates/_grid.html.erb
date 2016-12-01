@@ -1,9 +1,11 @@
 <div class="row">
   <% @templates.each do |template| %>
+    <% cache template do %>
     <div class="col-xs-6 col-sm-4 col-md-3 card">
       <div class="thumbnail">
         <%= image_tag(template.image.url, :class => "template-img", :data => { :template_id => template.id }) %>
     </div>
     </div>
+    <% end %>
   <% end %>
 </div>

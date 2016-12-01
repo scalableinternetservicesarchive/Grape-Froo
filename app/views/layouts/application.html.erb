@@ -30,6 +30,7 @@
       <%= alert %>
     </div>
     <% end %>
+<% cache current_user do %>
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container-fluid">
         <div class="navbar-header" id="top-nav-header">
@@ -78,6 +79,7 @@
             <% end %>
           </ul>
         </div>
+<% end %>
         <div class="col-fluid">
           <%= yield %>
         </div>
