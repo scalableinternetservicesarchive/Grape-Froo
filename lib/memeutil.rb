@@ -10,11 +10,15 @@ module Memeutil
         template_img = 'http:' + template_img
       end
       template_img.sub!(/^https/, 'http') # don't use https for speed
-      imgblob = open(template_img)
-      old_canvas = Magick::ImageList.new
-      old_canvas.from_blob(imgblob.read)
-      new_canvas = Magick::ImageList.new
-      image = old_canvas.first
+      content_type = ""
+      original_filename = File.basename(URI.parse(template_img).path)
+      imgblob = open(template_img) do |f|
+        content_type = f.content_type
+        f.read
+      end
+      canvas = Magick::ImageList.new
+      canvas.from_blob(imgblob)
+      image = canvas.first
 
       draw = Magick::Draw.new
       draw.font = File.join(Rails.root, "lib/Impact.ttf")
@@ -23,12 +27,12 @@ module Memeutil
       pointsize = image.columns / 5.0
       stroke_width = pointsize / 30.0
 
-      old_canvas.each do |canvas|
+      canvas.each do |frame|
         # Draw top
         unless top.empty?
           scale, text = scale_text(top)
           top_draw = draw.dup
-          top_draw.annotate(canvas, 0, 0, 0, 0, text) do
+          top_draw.annotate(frame, 0, 0, 0, 0, text) do
             self.interline_spacing = -(pointsize / INTERLINE_SPACING_RATIO) * scale
             self.stroke_antialias(true)
             self.stroke = "black"
@@ -42,7 +46,7 @@ module Memeutil
         unless bottom.empty?
           scale, text = scale_text(bottom)
           bottom_draw = draw.dup
-          bottom_draw.annotate(canvas, 0, 0, 0, 0, text) do
+          bottom_draw.annotate(frame, 0, 0, 0, 0, text) do
             self.interline_spacing = -(pointsize / INTERLINE_SPACING_RATIO) * scale
             self.stroke_antialias(true)
             self.stroke = "black"
@@ -52,13 +56,12 @@ module Memeutil
             self.pointsize = pointsize * scale
           end
         end
-        new_canvas.push canvas
       end
-      ext = File.extname(URI.parse(template_img).path)
-      file = Tempfile.new([rand(36**10).to_s(36), ext])
-      file.binmode
-      file.write(new_canvas.to_blob)
-      return file
+      f = StringIO.open(canvas.to_blob)
+      f.class.class_eval { attr_accessor :original_filename, :content_type }
+      f.original_filename = original_filename
+      f.content_type = content_type
+      return f
     end
 
     private
