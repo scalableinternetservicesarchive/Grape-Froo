@@ -19,7 +19,7 @@ class MemesController < ApplicationController
   def popular
     @memes = Meme.select("*, (SELECT COALESCE(SUM(votes.value),0) FROM votes
                          WHERE votes.meme_id = memes.id) AS score")
-                 .order("score DESC, memes.created_at DESC")
+      .order("score DESC, memes.created_at DESC").limit(500).paginate(:page => params[:page])
     @votes = Vote.where(meme: @memes.map{|m| m.id})
     if user_signed_in?
       @user_votes = @votes.where(user: current_user)
