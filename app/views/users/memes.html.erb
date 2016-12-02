@@ -1,23 +1,26 @@
-<% provide(:title, "My Memes") %>
+<% provide(:title, "#{@user_str} Memes") %>
+<%= render "tabs" %>
 
 <div class="row">
-  <ul class="nav nav-tabs">
-    <li role="presentation" class="active">
-      <%= link_to "My memes", user_memes_path %>
-    </li>
-    <li role="presentation">
-      <%= link_to "My Templates", user_templates_path %>
-    </li>
-  </ul>
-</div>
-
-<div class="row">
-  <% @user.meme.each do |meme| %>
+  <% @memes.each do |meme| %>
     <div class="col-xs-6 col-sm-4 col-md-3 card">
       <div class="thumbnail">
-        <%= link_to(image_tag(meme.image.url, :class => "meme-img"),
+        <%= link_to(image_tag(meme.image.url, :class => "card-img"),
                     meme, :title => meme.top_caption) %>
     </div>
     </div>
   <% end %>
 </div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="text-center">
+      <%= will_paginate @memes, renderer: BootstrapPagination::Rails %>
+    </div>
+  </div>
+</div>
+<% content_for :footerjs do %>
+<script type="text/javascript">
+$("#user-memes").addClass("active");
+</script>
+<% end %>
+

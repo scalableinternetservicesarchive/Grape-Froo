@@ -108,6 +108,11 @@ div.col-md-3 > form {
     width: calc(100% - #{$colwidth});
   }
 }
+
+hr {
+  margin-top: 0;
+}
+
 /*
  * X-Meme HTML5 Web Component by Martin Ivanov (@wemakesitesnet)
  **/

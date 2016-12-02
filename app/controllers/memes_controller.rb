@@ -6,7 +6,7 @@ class MemesController < ApplicationController
   # GET /memes
   # GET /memes.json
   def index
-    @memes = Meme.all.order('memes.created_at DESC')
+  @memes = Meme.all.order('memes.created_at DESC').limit(500).paginate(:page => params[:page])
     @votes = Vote.where(meme: @memes.map{|m| m.id})
     if user_signed_in?
       @user_votes = @votes.where(user: current_user)

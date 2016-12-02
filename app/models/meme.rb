@@ -1,6 +1,7 @@
 class Meme < ApplicationRecord
   belongs_to :template
   belongs_to :user
+  self.per_page = 25
   has_many :votes, dependent: :destroy
   has_many :comments, dependent: :destroy
   attr_accessor :user_vote

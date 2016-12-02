@@ -5,6 +5,7 @@ class Template < ApplicationRecord
   validates :name, uniqueness: true, presence: true, length: { in: 4..255 }
   belongs_to :user
   has_many :meme
+  self.per_page = 25
 
   def url=(url_value)
     self.image = URI.escape(url_value)

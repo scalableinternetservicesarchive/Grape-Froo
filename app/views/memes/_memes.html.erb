@@ -26,3 +26,10 @@
     </div>
   <% end %>
 </div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="text-center">
+      <%= will_paginate @memes, renderer: BootstrapPagination::Rails %>
+    </div>
+  </div>
+</div>
